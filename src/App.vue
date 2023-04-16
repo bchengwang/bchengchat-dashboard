@@ -1,22 +1,20 @@
 <template>
-  <div id="app">
-    <Hea/>
-    <Middle/>
-    <Bottom/>
+  <div class="app">
+    <Left/>
+    <Right/>
   </div>
 </template>
 
 <script>
-import Hea from './components/Hea.vue'
-import Middle from './components/Middle.vue'
-import Bottom from './components/Bottom.vue'
+import "./assets/css/iconfont.css"
+import Left from './components/Left.vue'
+import Right from './components/Right.vue'
 
 export default {
   name: 'App',
   components: {
-    Hea,
-    Middle,
-    Bottom
+    Left,
+    Right
   }
 }
 </script>
