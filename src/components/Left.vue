@@ -1,12 +1,13 @@
 <template>
     <div class="mid-box">
+      <div class="">
       <div class="Hea-box">
         <div class="Hea-box-1">
           <img src="../assets/10001.svg">
           <span>Chat</span>
         </div>
         <el-tooltip class="item" effect="dark" content="Logout" placement="right">
-            <i class="iconfont">&#xe66b;</i>
+            <i class="iconfont"><a href="./DengLu.vue" class="a-1">&#xe66b;</a></i>
         </el-tooltip>
       </div>
       <div class="in-box">
@@ -31,6 +32,7 @@
           </li>
         </ul>
       </div>
+    </div>
       <div class="bot-box">
         <div class="bot-box-1"><i class="iconfont">&#xe603;</i></div>
         <div class="bot-box-1"><i class="iconfont">&#xe601;</i></div>
@@ -68,6 +70,14 @@
 </script>
 
 <style>
+.a-1:hover{
+  color: #19a299;
+}
+.a-1{
+  text-decoration: none;
+	outline: none;
+	color: #000;
+}
 .li-box:hover{
   background-color: #F1F3F4;
   border-right:2px solid #19a299;
@@ -102,13 +112,12 @@
   height: 41.2px;
   background-color: #ffffff;
   padding: 15px;
-  border-right: 2px solid #19a299;
   position: relative;
   cursor: pointer;
 }
 .list-box::-webkit-scrollbar{
   width: 7px;
-  background: #ffffff;
+  background: #ffffff00;
 }
 .bot-box-1 i{
   font-size: 20px;
@@ -169,10 +178,10 @@
 .list-box{
   position: fixed;
   top: 140px;
-  width: 320px;
+  width: 326px;
   height: 583px;
   overflow-y: scroll;
-  background-color: #ffffff;
+  background-color: #ffffff00;
 }
 .in-box{
   width: 290px;

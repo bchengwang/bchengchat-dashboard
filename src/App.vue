@@ -9,12 +9,14 @@
 import "./assets/css/iconfont.css"
 import Left from './components/Left.vue'
 import Right from './components/Right.vue'
+import DengLu from './components/DengLu.vue'
 
 export default {
   name: 'App',
   components: {
     Left,
-    Right
+    Right,
+    DengLu
   }
 }
 </script>
