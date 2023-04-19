@@ -90,6 +90,13 @@
       "unicode_decimal": 58909
     },
     {
+      "icon_id": "5387519",
+      "name": "对号",
+      "font_class": "duihao",
+      "unicode": "eaf1",
+      "unicode_decimal": 60145
+    },
+    {
       "icon_id": "5387990",
       "name": "个人头像_o",
       "font_class": "gerentouxiang_o",

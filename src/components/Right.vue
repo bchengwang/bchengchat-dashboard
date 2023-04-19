@@ -190,7 +190,7 @@ export default {
   height: 38px;
 }
 .B-box{
-  width: 1138.4px;
+  width: 1155.4px;
   height: 38px;
   background-color: #ffffff;
   position: fixed;
@@ -250,7 +250,7 @@ export default {
   left: 1px;
 }
 .hea-box-x{
-  width: 1167.8px;
+  width: 1184.8px;
   height: 41.2px;
   padding: 15px;
   background-color: #ffffff;

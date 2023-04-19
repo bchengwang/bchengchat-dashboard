@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { Tabs,TabPane,Header,Container,Main,Footer,Tooltip,Button,Dialog,Row,Col,Dropdown,DropdownMenu,DropdownItem,Drawer } from 'element-ui';
+import { Tabs,TabPane,Header,Container,Main,Footer,Tooltip,Button,Dialog,Row,Col,Dropdown,DropdownMenu,DropdownItem,Drawer,Upload,Checkbox,Switch } from 'element-ui';
 
 Vue.config.productionTip = false
 
@@ -19,6 +19,9 @@ Vue.component("el-dropdown",Dropdown)
 Vue.component("el-dropdown-menu",DropdownMenu)
 Vue.component("el-dropdown-item",DropdownItem)
 Vue.component("el-drawer",Drawer)
+Vue.component("el-upload",Upload)
+Vue.component("el-checkbox",Checkbox)
+Vue.component("el-switch",Switch)
 
 new Vue({
 	el:'#app',
