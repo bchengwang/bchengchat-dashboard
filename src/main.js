@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { Tabs,TabPane,Header,Container,Main,Footer,Tooltip,Button,Dialog,Row,Col,Dropdown,DropdownMenu,DropdownItem,Drawer,Upload,Checkbox,Switch } from 'element-ui';
+import VueRouter from 'vue-router'
+import router from './router'
 
 Vue.config.productionTip = false
 
@@ -22,8 +24,10 @@ Vue.component("el-drawer",Drawer)
 Vue.component("el-upload",Upload)
 Vue.component("el-checkbox",Checkbox)
 Vue.component("el-switch",Switch)
+Vue.use(VueRouter)
 
 new Vue({
 	el:'#app',
+	router:router,
 	render: h => h(App),
 })

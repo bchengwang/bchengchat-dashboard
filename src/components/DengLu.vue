@@ -1,5 +1,4 @@
 <template>
-  
 </template>
 
 <script>
@@ -9,5 +8,7 @@ export default {
 </script>
 
 <style>
+.dl{
 
+}
 </style>

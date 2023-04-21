@@ -15,12 +15,7 @@
       <div class="R-box-e">
         <el-button type="text" @click="centerDialogVisible = true"><i class="iconfont">&#xe88b;</i></el-button>
         <el-button type="text" @click="centerDialogVisible = true"><i class="iconfont">&#xe634;</i></el-button>
-      <el-dialog
-      :append-to-body="true"
-    title="Incoming Voice Call"
-    :visible.sync="centerDialogVisible"
-    width="33%"
-    center>
+      <el-dialog :append-to-body="true" title="Incoming Voice Call" :visible.sync="centerDialogVisible" center>
     <div class="td-img"><img src="../assets/123.svg">
     <h5>Jessica Meir</h5>
     <p>Texas, USA</p>
@@ -36,7 +31,11 @@
         <span class="el-dropdown-link"><i class="iconfont">&#xe8c4;</i>
         </span>
         <el-dropdown-menu slot="dropdown" class="List-box-a">
-            <el-dropdown-item class="Item-a" @click="isShow = false">View User Info</el-dropdown-item>
+          <el-dropdown-item class="Item-a">
+              <el-button @click="drawer = true" type="primary">
+              View User Info
+            </el-button>
+            </el-dropdown-item>
           <el-dropdown-item class="Item-a">Search</el-dropdown-item>
           <el-dropdown-item class="Item-a">Archive</el-dropdown-item>
           <el-dropdown-item class="Item-a">Mute</el-dropdown-item>
@@ -53,12 +52,15 @@
   <div class="y-box">
     <i class="iconfont">&#xe7d0;</i>
   </div>
-  <div class="i-box"><input type="text" value="Type a message"></div>
+  <div class="i-box"><input type="text" placeholder="Type a message"></div>
   <div class="b-R-box">
     <i class="iconfont">&#xea36;</i>
     <i class="iconfont">&#xe62a;</i>
   </div>
 </div>
+<el-drawer title="我是标题" :visible.sync="drawer" :direction="direction" :before-close="handleClose" :append-to-body="true" :wrapperClosable="true">
+  <span>我来啦!</span>
+  </el-drawer>
 </div>
 </template>
 
@@ -68,9 +70,19 @@ export default {
   data() {
       return {
         centerDialogVisible: false,
-        isShow:"true"
+        drawer: false,
+        direction: 'rtl',
       };
     },
+    methods: {
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      }
+    }
 }
 </script>
 

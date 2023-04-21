@@ -2,6 +2,7 @@
   <div class="app">
     <Left/>
     <Right/>
+    <router-view/>
   </div>
 </template>
 

@@ -7,13 +7,13 @@
           <img src="../assets/10001.svg">
           <span>Chat</span>
         </div>
-        <el-tooltip class="item" effect="dark" content="Logout" placement="right">
-            <i class="iconfont"><a href="./DengLu.vue" class="a-1">&#xe66b;</a></i>
+        <el-tooltip class="item" effect="dark" content="Logout!" placement="right">
+          <i class="iconfont a-1" @click="tiaozhuan()">&#xe66b;</i>
         </el-tooltip>
       </div>
       <div class="in-box">
         <div class="in-box-1">
-        <input type="text" value="Search">
+        <input type="text" placeholder="Search">
         <div class="bt-box">
           <button class="btn-style"><i class="iconfont">&#xe65f;</i></button>
         </div>
@@ -42,11 +42,133 @@
           <img src="../assets/10001.svg">
           <span>New Chat</span>
         </div>
-            <i class="iconfont"><a href="./DengLu.vue" class="a-1">&#xf0226;</a></i>
+        <el-button type="text" @click="dialogVisible = true">
+          <i class="iconfont" id="i-box">&#xf0226;</i>
+        </el-button>
+        <el-dialog :append-to-body="true" title="Create Group" :visible.sync="dialogVisible" :before-close="handleClose">
+          <div class="outside-box">
+            <div class="ipt-from-box1">
+              <input type="text" placeholder="Enter Group Name">
+            </div>
+            <div class="ipt-from-box2">
+              <textarea rows="3" placeholder="Enter Group Description"></textarea>
+            </div>
+            <p class="p-text-tie">Add Users</p>
+            <div class="tx-list-box1">
+              <el-tooltip class="item" effect="dark" content="Emily Cook" placement="top">
+                <img src="../assets/10008.svg" class="tx-list-box1-img1">
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="Lauren GotLib" placement="top">
+                <img src="../assets/3.svg" class="tx-list-box1-img2">
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="Noir Ajkeban" placement="top">
+                <img src="../assets/1.svg" class="tx-list-box1-img3">
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="Add New User" placement="top">
+                <img src="../assets/8.svg" class="tx-list-box1-img4">
+              </el-tooltip>
+            </div>
+            <div class="input-group">
+              <input type="text" placeholder="Search">
+              <div class="div-group">
+                <button class="button-group">
+                  <i class="iconfont">&#xe65f;</i>
+                </button>
+              </div>
+            </div>
+            <div class="add-list-box">
+              <ul class="list-unstyled">
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+                <li class="media">
+                  <img src="../assets/10008.svg">
+                  <div class="media-text-box">
+                    <h5>Emily Cook</h5>
+                    <p>Hey there. I am on Chalty.</p>
+                  </div>
+                    <el-checkbox v-model="checkeda" class="cekx-box-1"></el-checkbox>
+                </li>
+              </ul>
+            </div>
+      <div slot="footer" class="dialog-footer el-btn-box1">
+        <el-button type="primary" @click="dialogVisible = false">+ Create Group</el-button>
+  </div>
+</div>
+</el-dialog>
       </div>
       <div class="in-box">
         <div class="in-box-1">
-        <input type="text" value="Search">
+        <input type="text" placeholder="Search">
         <div class="bt-box">
           <button class="btn-style"><i class="iconfont">&#xe65f;</i></button>
         </div>
@@ -74,9 +196,6 @@
           <img src="../assets/10001.svg">
           <span>My Profile</span>
         </div>
-        <el-tooltip class="item" effect="dark" content="Logout" placement="right">
-            <i class="iconfont"><a href="./DengLu.vue" class="a-1">&#xe66b;</a></i>
-        </el-tooltip>
       </div>
       <div class="list-box-fa">
         <div class="Gl-box-fa">
@@ -249,16 +368,8 @@
       </div>
     </div>
     </transition>
-      <div class="bot-box">
-        <ul>
-          <li>
-            <a href="">
-              <i></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="right-mid-box1">
+    <transition name="fade">
+      <div class="right-mid-box1" v-show="show">
         <div class="n-right-mid-box1">
           <ul class="lt-ul-box-1">
             <li class="hea-mid-text-1">
@@ -325,90 +436,72 @@
               </div>
               <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
             </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
+            <li class="message-right-3">
+              <div class="message-right-box1">
+              <div class="triangle-7"></div>
+              <div class="right-text-4">
+                I request you to schedule demo at 3 pm after 2 days for the better progress.
                 <br>
-                Please, have a look at images and let me know if changes required.
+                After that we are discussion of final confirmation this project.
+              </div>
+              <span class="right-time-3">4:18 pm<i class="iconfont">&#xeaf1;</i></span>
+            </div>
+            </li>
+            <li class="message-left-5">
+              <div class="triangle-8"></div>
+              <div class="left-text-5">
+                <audio controls class="message-left-audio">
+                  <source src="../assets/兰亭序-周杰伦.mp3" type="audio/mpeg">
+                </audio>
               </div>
               <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
             </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
+            <li class="message-right-4">
+              <div class="triangle-9"></div>
+              <div class="message-PDF-text">
+                <ul class="PDF-ul">
+                  <li class="PDF-li"><img src="../assets/PDF.svg"></li>
+                  <div class="PDF-right-text">
+                    <h5>Document.pdf</h5>
+                    <p>50kb</p>
+                  </div>
+                </ul>
+                <span class="right-time-2">4:18 pm<i class="iconfont">&#xeaf1;</i></span>
               </div>
+            </li>
+            <li class="message-right-1">
+              <div class="message-right-box1">
+              <div class="triangle-2"></div>
+              <div class="right-text-5">Please, refer this doc file for documentation.</div>
+              <span class="right-time-1">4:18 pm<i class="iconfont">&#xeaf1;</i></span>
+              </div>
+            </li>
+            <li class="message-left-1">
+              <div class="triangle-1"></div>
+              <div class="left-text-6">Sure, I will prepare for the same.</div>
               <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
             </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
+            <li class="message-right-1">
+              <div class="message-right-box1">
+              <div class="triangle-a-1"></div>
+              <div class="right-text-6">Great. Thanks</div>
+              <span class="right-time-4">4:18 pm<i class="iconfont">&#xeaf1;</i></span>
               </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
-            </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
-              </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
-            </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
-              </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
-            </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
-              </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
-            </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
-              </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
-            </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
-              </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
-            </li>
-            <li class="message-left-3">
-              <div class="triangle-4"></div>
-              <div class="left-text-3">
-                I am sharing images of project work done so far.
-                <br>
-                Please, have a look at images and let me know if changes required.
-              </div>
-              <span class="left-time-1">4:20 pm<i class="iconfont">&#xeaf1;</i></span>
             </li>
           </ul>
         </div>
       </div>
+      </transition>
+      <transition name="fade">
+      <div class="right-mid-box1" v-show="!show">
+        <div class="n-right-mid-box1">
+          <div class="mid-img-box">
+            <img src="../assets/mid.png">
+            <p>No Conversation Yet.</p>
+          </div>
+        </div>
+      </div>
+      </transition>
       <div class="right-mid-box2">
         <div>
           <div class="bot-box">
@@ -483,6 +576,8 @@ import 'animate.css';
         checked7:true,
         checked8:true,
         activeVar:0,
+        show:true,
+        checkeda:false,
       };
     },
     methods: {
@@ -523,13 +618,451 @@ import 'animate.css';
       activeFun(item,index){
         // item 为被选中的元素体
         this.activeVar=index
-  }
+        this.show = !this.show;
+  },
+  tiaozhuan(){
+      this.$router.push({path:'/DengLu'})
+    }
     }
     }
 
 </script>
 
 <style>
+.el-button--primary:focus, .el-button--primary:hover {
+  background-color: #19a299;
+  border-color: #19a299;
+  color: #FFF;
+}
+.el-button--primary {
+  color: #FFF;
+  background-color: #19a299;
+  border-color: #19a299;
+  font-size: 16px;
+  width: 142.138px;
+  height: 37px;
+  padding: 6px 12px;
+}
+.el-btn-box1{
+  width: 466.4px;
+  height: 37.6px;
+  margin-top: 16px;
+  text-align: center;
+}
+.cekx-box-1{
+  position: absolute;
+  top: 38px;
+  right: 55px;
+}
+.media-text-box p{
+  font-size: 14px;
+  color: #8A98AC;
+}
+.media-text-box h5{
+  font-size: 15px;
+  color: #263A5B;
+}
+.media-text-box{
+  width: 374.163px;
+  height: 41.2px;
+  position: absolute;
+  top: 18px;
+  left: 49px;
+}
+.media img{
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+.media{
+  padding: 15px 0px;
+  width: 464.8px;
+  height: 41.2px;
+  background-color: #FFF;
+  position: relative;
+}
+.list-unstyled::-webkit-scrollbar{
+  width: 7px;
+  background: #ffffff00;
+}
+.list-unstyled{
+  width: 466.4px;
+  height: 350px;
+  overflow-y: scroll;
+  list-style: none;
+}
+.add-list-box{
+  width: 466.4px;
+  height: 350px;
+}
+.button-group{
+  outline: none;
+  background-color: rgba(129, 167, 205, 0.1);
+  padding: 4px 12px;
+  color: #4c595f;
+  width: 41px;
+  height: 36.4px;
+  position: absolute;
+  top: 0px;
+  right: 1px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+.div-group{
+  width: 41.6px;
+  height: 35px;
+}
+.input-group input{
+  width: 400.8px;
+  height: 23px;
+  padding: 6px 12px;
+  background-color: rgba(129, 167, 205, 0.1);
+  font-size: 14px;
+  color: #8A98AC;
+  border: none;
+  border-radius: 3px;
+}
+.input-group{
+  width: 466.4px;
+  height: 35px;
+  position: relative;
+}
+.tx-list-box1{
+  position: relative;
+  padding: 15px;
+  width: 436.4px;
+  height: 35px;
+}
+.tx-list-box1-img1{
+  border: 3px solid #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+}
+.tx-list-box1-img2{
+  border: 3px solid #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 26px;
+  border-radius: 100%;
+  background-color: #C9E9EC;
+  width: 35px;
+  height: 35px;
+}
+.tx-list-box1-img3{
+  border: 3px solid #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 51px;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  background-color: #FDEAEA;
+}
+.tx-list-box1-img4{
+  border: 3px solid #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 77px;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  background-color: #19a299;
+}
+.p-text-tie{
+  padding: 15px;
+  width: 436.4px;
+  height: 18.2px;
+  font-size: 14px;
+  color: #8A98AC;
+}
+.ipt-from-box2 textarea{
+  background-color: rgba(129, 167, 205, 0.1);
+  font-size: 15px;
+  color: #8A98AC;
+  border: none;
+  border-radius: 3px;
+  padding: 6px 12px;
+  width: 442.4px;
+  height: 63px;
+  outline: none;
+  font-family: emoji;
+}
+.ipt-from-box2{
+  width: 466.4px;
+  height: 75px;
+  margin-bottom: 16px;
+}
+.ipt-from-box1 input{
+  width: 442.4px;
+  height: 23px;
+  padding: 6px 12px;
+  border: none;
+  outline: none;
+  background-color: rgba(129, 167, 205, 0.1);
+  font-size: 14px;
+  color: #8A98AC;
+  border-radius: 3px;
+  font-weight: 400;
+  font-family: emoji;
+}
+.ipt-from-box1{
+  width: 466.4px;
+  height: 35px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+.el-dialog__body {
+  padding: 16px;
+  color: #606266;
+  font-size: 14px;
+  word-break: break-all;
+}
+.outside-box{
+  width: 466.4px;
+  height: 694.6px;
+  position: relative;
+  top: -16px;
+}
+.modal-title {
+  color: #4c595f;
+  font-size: 18px;
+  font-weight: 400;
+}
+.el-dialog__header {
+  padding: 16px;
+  width: 468px;
+  height: 27px;
+  text-align: center;
+  border-bottom: 0.5px solid #f1f2f3;
+}
+.el-dialog__footer {
+  padding: 10px 20px 20px;
+  text-align: right;
+  box-sizing: border-box;
+  text-align: center;
+}
+.el-dialog__headerbtn {
+  position: absolute;
+  top: -31px;
+  right: 67px;
+  padding: 0;
+  background: 0 0;
+  border: none;
+  outline: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+.el-dialog {
+  position: relative;
+  margin: 0 auto 50px;
+  background: #FFF;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  box-sizing: border-box;
+  width: 500px !important;
+  height: 786.4px;
+  margin-top: 20px !important;
+}
+.el-dialog__header {
+  padding: 16px;
+  width: 468px;
+  height: 27px;
+}
+.v-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  background: #000;
+  z-index: 1 !important;
+}
+.mid-img-box p{
+  font-size: 20px;
+  color: #263A5B;
+  font-weight: 600;
+  position: absolute;
+  top:155px;
+  left: -25px;
+}
+.mid-img-box{
+  position: relative;
+  top: 220px;
+  left: 485px;
+}
+.right-time-4{
+  font-size: 13px;
+  color: #8A98AC;
+  position: absolute;
+  right: 1px;
+  top: 35px;
+}
+.triangle-a-1{
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid #19a299;
+  border-right: 11px solid transparent;
+  position: absolute;
+  right: -10px;
+  top: 10px;
+}
+.right-text-6{
+  width: 91.413px;
+  float: right;
+  height: 21px;
+  color: #ffffff;
+  background-color: #19a299;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 3px;
+}
+.left-text-6{
+  width: 218.062px;
+  height: 21px;
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size:14px;
+  color: #4c595f;
+}
+.right-text-5{
+  width: 296.413px;
+  float: right;
+  height: 21px;
+  color: #ffffff;
+  background-color: #19a299;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 3px;
+}
+.PDF-li{
+  position: absolute;
+  top: 5px;
+  left: 1px;
+}
+.PDF-right-text p{
+  margin-top: 5px;
+}
+.PDF-right-text{
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  color: #ffffff;
+}
+.PDF-ul{
+  list-style: none;
+  position: relative;
+}
+.triangle-9{
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid #19a299;
+  border-right: 11px solid transparent;
+  position: absolute;
+  right: -10px;
+  top: 49px;
+}
+.message-PDF-text span{
+  font-size: 13px;
+  color: #8A98AC;
+  position: absolute;
+  right: 1px;
+  top: 76px;
+}
+.message-PDF-text{
+  width: 167.762px;
+  height: 60px;
+  background-color: #19a299;
+  padding: 5px 10px;
+  border-radius: 3px;
+  float: right;
+  position: relative;
+  right: 1px;
+  top: 0px;
+}
+.message-right-4{
+  width: 1137.6px;
+  height: 94.5px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.message-left-audio{
+  width: 210px;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.triangle-8{
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid #ffffff;
+  border-right: 11px solid transparent;
+  position: absolute;
+  top: 50px;
+  left: -11px;
+}
+.left-text-5{
+  width: 210px;
+  height: 60px;
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size:14px;
+  color: #4c595f;
+  position: relative;
+}
+.message-left-5{
+  width: 1137.6px;
+  height: 94.5px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.right-time-3{
+  font-size: 13px;
+  color: #8A98AC;
+  position: absolute;
+  right: 1px;
+  top: 76px;
+}
+.triangle-7{
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid #19a299;
+  border-right: 11px solid transparent;
+  position: relative;
+  left: 521px;
+  top: 52px;
+}
+.message-right-3{
+  width: 1137.6px;
+  height: 76.5px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.right-text-4{
+  width: 509.938px;
+  float: right;
+  height: 42px;
+  color: #ffffff;
+  background-color: #19a299;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 3px;
+}
 .left-text-4 span{
   position: absolute;
   top: 66px;
@@ -819,7 +1352,6 @@ import 'animate.css';
   /* opacity 透明度 */
   transition: opacity 1s
 }
-  /* .fade-leave-active, 2.1.8 版本以下 */
   .fade-enter, .fade-leave-to  {
       opacity: 0
   }
@@ -1107,6 +1639,10 @@ import 'animate.css';
   text-decoration: none;
 	outline: none;
 	color: #000;
+  position: absolute;
+  top: 22px;
+  right: 15px;
+  font-size: 26px;
 }
 .li-box:hover{
   background-color: #F1F3F4;
@@ -1225,10 +1761,10 @@ import 'animate.css';
   background-color: #ffffff;
   position: fixed;
 }
-.Hea-box i:hover{
+#i-box:hover{
   color: #19a299;
 }
-.Hea-box i{
+#i-box{
   position: absolute;
   color: #4c595f;
   font-size: 26px;
