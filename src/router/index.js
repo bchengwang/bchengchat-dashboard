@@ -5,12 +5,6 @@ import RegistrationPage from '../pages/RegistrationPage.vue'
 import Forgotpsw from '../pages/Forgotpsw.vue'
 import SessionNull from '../pages/SessionNull.vue'
 import firstChat from '../pages/firstChat.vue'
-import secondChat from '../pages/secondChat.vue'
-import thirdlyChat from '../pages/thirdlyChat.vue'
-import fourthlyChat from '../pages/fourthlyChat.vue'
-import fifthChat from '../pages/fifthChat.vue'
-import sixthChat from '../pages/sixthChat.vue'
-import seventhChat from '../pages/seventhChat.vue'
 export default new VueRouter({
     routes:[
         {
@@ -22,33 +16,14 @@ export default new VueRouter({
                     component:SessionNull
                 },
                 {
-                    path:'firstChat',
-                    component:firstChat
+                    path:'/firstChat',
+                    name:"firstChat",
+                    component:firstChat,
+                    query:{
+                        required:false,
+                        default:''
+                    }
                 },
-                {
-                    path:'secondChat',
-                    component:secondChat
-                },
-                {
-                    path:'thirdlyChat',
-                    component:thirdlyChat
-                },
-                {
-                    path:'fourthlyChat',
-                    component:fourthlyChat
-                },
-                {
-                    path:'fifthChat',
-                    component:fifthChat
-                },
-                {
-                    path:'sixthChat',
-                    component:sixthChat
-                },
-                {
-                    path:'seventhChat',
-                    component:seventhChat
-                }
             ]
         },
         {

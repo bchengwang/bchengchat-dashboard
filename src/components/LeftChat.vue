@@ -3,7 +3,11 @@
     <div class="Bottom-menu">
       <el-tabs :tab-position="tabPosition" style="height: 200px;">
         <el-tab-pane label="">
-          <div slot="label" class="el-title-i-style" :class="{ColorActive: isActiveColor === 1}" @click="changeClassColor(1)">
+          <div slot="label"
+          class="el-title-i-style"
+          :class="{ColorActive: isActiveColor === 1}"
+          @click="changeClassColor(1)"
+          >
             <i class="el-icon-chat-round" @click="changeNumber(1)"></i>
           </div>
           <transition name="fade">
@@ -26,7 +30,7 @@
                 <div class="search-box">
                   <form>
                     <div class="search-content">
-                      <input type="text" class="search-input-style" placeholder="Search">
+                      <input type="text" class="search-input-style" placeholder="Search" v-model="searchWord">
                       <div class="search-btn-box">
                         <button class="search-btn-style">
                           <i class="iconfont">&#xe65f;</i>
@@ -37,210 +41,21 @@
                 </div>
                 <div class="list">
                   <ul class="list-style-ul">
-                    <li class="list-li-style" :class="{active: isActive === 1}" @click="changeClass(1)">
-                      <router-link to="/firstChat">
+                    <li class="list-li-style"
+                    :class="{active: isActive === index}"
+                    @click="changeClass(index,userInfos.key)"
+                    v-for="(userInfos,index) in filPerons"
+                    :key="index"
+                    >
+                      <router-link :to="userInfos.to" slot="reference" >
                       <div class="list-li-content">
                         <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
+                        <img :src="userInfos.imageUrl" alt="头像">
                         <div>
                           <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 2}" @click="changeClass(2)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 3}" @click="changeClass(3)">
-                      <router-link to="secondChat">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 4}" @click="changeClass(4)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 5}" @click="changeClass(5)">
-                      <router-link to="/thirdlyChat">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 6}" @click="changeClass(6)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 7}" @click="changeClass(7)">
-                      <router-link to="/fourthlyChat">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 8}" @click="changeClass(8)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 9}" @click="changeClass(9)">
-                      <router-link to="/fifthChat">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 10}" @click="changeClass(10)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 11}" @click="changeClass(11)">
-                      <router-link to="/sixthChat">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 12}" @click="changeClass(12)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 13}" @click="changeClass(13)">
-                      <router-link to="/seventhChat">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                    </router-link>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 14}" @click="changeClass(14)">
-                      <router-link to="/SessionNull">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
+                            {{ userInfos.name }}
+                            <h5 class="abc-h5" @click="deleteMessage(userInfos.key)">删除</h5>
+                            <span>{{ userInfos.time }}</span>
                           </h5>
                           <p class="list-li-p-style">Waiting for module 1 to finish...</p>
                         </div>
@@ -742,7 +557,7 @@
             </div>
           </transition>
         </el-tab-pane>
-        <el-tab-pane label="">  
+        <el-tab-pane label="">
           <div slot="label" class="el-title-i-style" :class="{ColorActive: isActiveColor === 4}" @click="changeClassColor(4)">
             <i class="el-icon-setting" @click="changeNumber(4)"></i>
           </div>
@@ -852,7 +667,8 @@ export default {
   name: "LeftChat",
   data() {
   return {
-    isActive: 0,
+    searchWord:'',
+    isActive: '',
     tabPosition: 'bottom',
     isActiveColor:1,
     centerDialogVisible: false,
@@ -861,11 +677,337 @@ export default {
     value1:true,
     value2:false,
     value3:false,
+    userInfo:[
+      {name:"张1",time:"02:30",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:1},
+      {name:"张2",time:"02:31",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:2},
+      {name:"张3",time:"02:32",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:3},
+      {name:"张4",time:"02:33",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:4},
+      {name:"张5",time:"02:34",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:5},
+      {name:"张6",time:"02:35",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:6},
+      {name:"张7",time:"02:36",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:7},
+      {name:"张8",time:"02:37",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:8},
+      {name:"张9",time:"02:38",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:9},
+      {name:"张7",time:"02:36",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:10},
+      {name:"张8",time:"02:37",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:11},
+      {name:"张9",time:"02:38",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:12},
+      {name:"张7",time:"02:36",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:13},
+      {name:"张8",time:"02:37",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:14},
+      {name:"张9",time:"02:38",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:15},
+    ],
+    messageList1:[
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+    ],
+    messageList2:[
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+    ],
+    messageList3:[
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+    ],
+    messageList4:[
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+    ],
+    messageList5:[
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+    ],
+    messageList6:[
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+    ],
+    messageList7:[
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
+    ],
+    messageList8:[
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+    ],
   }
 },
+computed:{
+    filPerons(){
+      return this.userInfo.filter((u)=>{
+        return u.name.indexOf(this.searchWord) !== -1
+      })
+    }
+  },
 methods: {
-  changeClass(i) {
+  deleteMessage(id){
+    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.userInfo = this.userInfo.filter((u)=>{
+          return u.key!== id
+          })
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+    },
+  changeClass(i,k) {
     this.isActive = i;
+    switch (k) {
+    case 1:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList1}});
+      this.x.$emit('Hi', this.userInfo[0]);
+      break;
+    case 2:
+      this.x.$emit('Hi', this.userInfo[1]);
+      break;
+    case 3:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList2}});
+      this.x.$emit('Hi', this.userInfo[2]);
+      break;
+    case 4:
+      this.x.$emit('Hi', this.userInfo[3]);
+      break;
+    case 5:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList3}});
+      this.x.$emit('Hi', this.userInfo[4]);
+      break;
+    case 6:
+      this.x.$emit('Hi', this.userInfo[5]);
+      break;
+    case 7:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList4}});
+      this.x.$emit('Hi', this.userInfo[6]);
+      break;
+    case 8:
+      this.x.$emit('Hi', this.userInfo[7]);
+      break;
+    case 9:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList5}});
+      this.x.$emit('Hi', this.userInfo[8]);
+      break;
+    case 10:
+      this.x.$emit('Hi', this.userInfo[9]);
+      break;
+    case 11:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList6}});
+      this.x.$emit('Hi', this.userInfo[10]);
+      break;
+    case 12:
+      this.x.$emit('Hi', this.userInfo[11]);
+      break;
+    case 13:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList7}});
+      this.x.$emit('Hi', this.userInfo[12]);
+      break;
+    case 14:
+      this.x.$emit('Hi', this.userInfo[13]);
+      break;
+    case 15:
+      this.$router.push({path: 'firstChat', query: {name: this.messageList8}});
+      this.x.$emit('Hi', this.userInfo[14]);
+      break;
+    default:
+      console.log(k);
+      break;
+  }
   },
   changeClassColor(v) {
     this.isActiveColor = v;
@@ -892,6 +1034,19 @@ methods: {
 }
 </script>
 <style scoped>
+.list-li-style:hover a div div H5 H5{
+  display: inline;
+}
+.abc-h5{
+  font-size: 14px;
+  color: red;
+  font-weight: 300;
+  position: relative;
+  right: -106px;
+  line-height: 15px;
+  display: inline;
+  display: none;
+}
 .Setting-bottom-box >>> .el-checkbox__inner::after{
   display: none;
 }
@@ -1091,6 +1246,7 @@ right: 0;
   font-size: 15px;
   color: #263a5b;
   margin-bottom: 5px;
+  position: relative;
 }
 .list-li-style:hover{
   background-color: #F1F3F4;
@@ -1628,5 +1784,7 @@ border: 2px solid #4C595F;
   color: #8A98AC;
   float: right;
   font-weight: 100;
+  position: absolute;
+  right: 1px;
 }
 </style>

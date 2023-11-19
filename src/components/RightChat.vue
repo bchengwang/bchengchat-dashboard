@@ -1,12 +1,13 @@
 <template>
 <div class="right-chat">
     <div class="chat-body">
-      <div class="chat-head" :class="{headSmall: isSmall}">
+      <div class="abc">
+      <div class="chat-head" :class="{headSmall: isSmall}" v-show="isShow1">
       <div class="chat-head-img">
         <div class="dot"></div>
-        <img src="../assets/10008.svg">
+        <img :src="userImgUrl">
       </div>
-      <div class="user-text"><h5>Emily Cook</h5><p class="text-p">Online</p></div>
+      <div class="user-text"><h5>{{ name }}</h5><p class="text-p">在线</p></div>
       <div class="right-btn">
         <div><a href="#" @click="centerDialogVisible = true"><i class="el-icon-phone-outline"></i></a></div>
         <el-dialog
@@ -65,7 +66,8 @@
           </el-dropdown-menu>
         </el-dropdown>
       </a></div>
-      </div>
+    </div>
+    </div>
     </div>
       <div class="chat-content" :class="{headSmall: isSmall}">
         <transition name="hello">
@@ -73,16 +75,16 @@
         </transition>
       </div>
       <div class="chat-bottom" :class="{small: isSmall}">
-        <form action="#">
+        <div>
           <div class="Chat-input-box">
             <div class="microphone-style"><a href="#"><i class="el-icon-microphone"></i></a></div>
-            <input type="text" placeholder="Type a message...">
+            <input type="text" placeholder="Type a message..." v-model="inputContent">
           <div class="send-style">
             <div class="paperclip-style"><a href="#"><i class="el-icon-paperclip"></i></a></div>
-            <div><a href="#"><i class="el-icon-s-promotion"></i></a></div>
+            <div><a @click="sendMessageItem()"><i class="el-icon-s-promotion"></i></a></div>
           </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
     <div class="chat-user-info" :class="{show: isShow}">
@@ -170,12 +172,21 @@ export default {
   data() {
     return {
       isShow:true,
+      isShow1:false,
       isSmall:false,
       centerDialogVisible: false,
       centerDialogVisible2:false,
       value1:true,
       value2:false,
-      translate: 0
+      translate: 0,
+      inputContent:"",
+      itemMessage:{
+        messageClass:'chat-message-right',
+        message:'',
+        time:"04:20,"
+      },
+      name:'',
+      userImgUrl:'',
     };
   },
   mounted(){
@@ -185,8 +196,34 @@ export default {
           this.translate = 0;
         }
       },3000)
+      console.log(this.$router);
+      this.x.$on('Hi',(dataList)=>{
+        console.log('我是RightChat组件我收到了数据',dataList);
+        this.name = dataList.name;
+        this.userImgUrl = dataList.imageUrl;
+        console.log(this.name);
+        console.log(this.userImgUrl);
+        if(this.name){
+        this.isShow1 = true;
+        console.log(this.isShow1,11213);
+      }
+      })
+
   },
   methods: {
+    sendMessageItem(){
+      this.itemMessage.message = this.inputContent;
+      if(this.inputContent != ""){
+        this.x.$emit('hello',this.itemMessage)
+      }else{
+        this.$notify({
+          title: '警告',
+          message: '发送内容不能为空，请重新输入！！！',
+          type: 'warning'
+        });
+      }
+      this.inputContent = ''
+    },
     btnClick(){
       this.isShow = !this.isShow;
       this.isSmall = !this.isSmall;
@@ -208,6 +245,10 @@ export default {
 </script>
 
 <style scoped>
+.abc{
+  height: 72px;
+  background-color: white;
+}
 .hello-leave,.hello-enter-to {
   opacity: 1;
 }

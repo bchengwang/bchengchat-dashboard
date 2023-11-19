@@ -1,114 +1,48 @@
 <template>
 <div class="firstChat">
-    <div class="firstChat-body">
-        <div class="firstChat-body-content">
-            <div class="chat-day"><span>Today</span></div>
-            <div class="chat-message-right">
+    <div class="firstChat-body" @click="List">
+        <div class="chat-day"><span>Today</span></div>
+        <ul class="firstChat-body-content">
+            <li :class="item.messageClass" v-for="(item,index) in this.$route.query.name" :key="index">
                 <i class="el-icon-caret-top"></i>
                 <div class="chat-message-text">
-                    <span>Hello! please, let me know the status about project after school.</span>
+                    <span>{{ item.message }}</span>
                 </div>
-                <div class="chat-message-time"><span>4:18 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-left">
-                <div class="chat-message-text">
-                    <span>I have completed 4 stages 5 stages remaining.<i class="el-icon-caret-top"></i></span>
-                </div>
-                <div class="chat-message-time"><span>4:20 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <span>Let me share video for detailed information</span>
-                </div>
-                <div class="chat-message-time"><span>4:22 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <span><img src="../assets/微信截图_20230419160943.png" class="img-1"><br>Demo.Mp4</span>
-                </div>
-                <div class="chat-message-time"><span><i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-left">
-                <div class="chat-message-text">
-                    <span>Thanks for the video.<i class="el-icon-caret-top"></i></span>
-                </div>
-            </div>
-            <div class="chat-message-left">
-                <div class="chat-message-text">
-                    <span>I am sharing images of project work done so far. <br>Please, have a look at images and let me know if changes required.<i class="el-icon-caret-top"></i></span>
-                </div>
-                <div class="chat-message-time"><span>4:30 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <span>Could you share photos, please?</span>
-                </div>
-                <div class="chat-message-time"><span>4:33 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-left">
-                <div class="chat-message-text">
-                    <span><img src="../assets/8.png"><img src="../assets/9.png"><img src="../assets/1143.png" class="img-1103"><br>Photos of product<i class="el-icon-caret-top"></i></span>
-                </div>
-                <div class="chat-message-time"><span>4:32 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <span>I request you to schedule demo at 3 pm after 2 days for the better progress. <br>After that we are discussion of final confirmation this project.</span>
-                </div>
-                <div class="chat-message-time"><span>4:33 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-left">
-                <div class="chat-message-text">
-                    <span><audio controls src="../assets/兰亭序-周杰伦.mp3"></audio><i class="el-icon-caret-top"></i></span>
-                </div>
-                <div class="chat-message-time"><span>4:38 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <div class="PDF-box"><img src="../assets/PDF.svg" alt="PDF" class="img-PDF"><div class="document-pdf">
-                        <h5>Document.pdf</h5>
-                        <p>50KB</p>
-                    </div></div>
-                </div>
-                <div class="chat-message-time"><span>4:40 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <span>Please, refer this doc file for documentation.</span>
-                </div>
-                <div class="chat-message-time"><span>4:41 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-left">
-                <div class="chat-message-text">
-                    <span>Sure, I will prepare for the same.<i class="el-icon-caret-top"></i></span>
-                </div>
-                <div class="chat-message-time"><span>4:43 pm<i class="el-icon-check"></i></span></div>
-            </div>
-            <div class="chat-message-right">
-                <i class="el-icon-caret-top"></i>
-                <div class="chat-message-text">
-                    <span>Great. Thanks</span>
-                </div>
-                <div class="chat-message-time"><span>4:45 pm<i class="el-icon-time"></i></span></div>
-            </div>
-        </div>
+                <div class="chat-message-time"><span>{{item.time}}<i class="el-icon-check"></i></span></div>
+            </li>
+        </ul>
     </div>
 </div>
 </template>
-
+ 
 <script>
 export default {
-name:"firstChat"
+name:"firstChat",
+data() {
+    return {
+        time: '',
+    };
+},
+mounted(){
+    this.x.$on('hello',(data)=>{
+        this.time = new Date().toLocaleTimeString()
+        this.$route.query.name.push({messageClass:'chat-message-right',message:data.message,time:this.time})
+        this.$forceUpdate()
+    })
+},
+methods:{
+    List(){
+        console.log(this.$route.query.name);
+        console.log(this.$route);
+    }
+},
 }
 </script>
 
 <style>
+.firstChat-body-content li {
+    list-style: none;
+}
 .firstChat{
     height: 672px;
 }
@@ -126,6 +60,7 @@ name:"firstChat"
 .chat-day{
     text-align: center;
     margin-bottom: 16px;
+    list-style: none;
 }
 .chat-day span{
     background-color: rgba(129, 167, 205, 0.1);
@@ -136,10 +71,13 @@ name:"firstChat"
     margin-bottom: 15px;
     text-align:right;
     position: relative;
+    list-style: none;
 }
 .chat-message-left{
     margin-bottom: 15px;
     text-align: left;
+    list-style: none;
+    position: relative;
 }
 .chat-message-right .chat-message-text{
     background-color: #19a299;
@@ -169,11 +107,11 @@ name:"firstChat"
     position: relative;
     color: #4c595f;
 }
-.chat-message-left .chat-message-text span i{
+.chat-message-left .el-icon-caret-top{
     position: absolute;
     left: -17px;
     color: #ffffff;
-    bottom: -12px;
+    bottom: 11px;
     font-size: 35px;
 }
 .chat-message-right .el-icon-caret-top{
