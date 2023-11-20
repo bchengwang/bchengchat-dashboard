@@ -1,9 +1,9 @@
 <template>
 <div class="firstChat">
-    <div class="firstChat-body" @click="List">
+    <div class="firstChat-body">
         <div class="chat-day"><span>Today</span></div>
         <ul class="firstChat-body-content">
-            <li :class="item.messageClass" v-for="(item,index) in this.$route.query.name" :key="index">
+            <li :class="item.messageClass" v-for="(item,index) in userMessageList.messageList" :key="index">
                 <i class="el-icon-caret-top"></i>
                 <div class="chat-message-text">
                     <span>{{ item.message }}</span>
@@ -23,18 +23,12 @@ data() {
         time: '',
     };
 },
+props:["userMessageList"],
 mounted(){
-    this.x.$on('hello',(data)=>{
+    this.x.$on('sendMessage',(data)=>{
         this.time = new Date().toLocaleTimeString()
-        this.$route.query.name.push({messageClass:'chat-message-right',message:data.message,time:this.time})
-        this.$forceUpdate()
+        this.userMessageList.messageList.push({messageClass:'chat-message-right',message:data.message,time:this.time})
     })
-},
-methods:{
-    List(){
-        console.log(this.$route.query.name);
-        console.log(this.$route);
-    }
 },
 }
 </script>

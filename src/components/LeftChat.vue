@@ -43,7 +43,7 @@
                   <ul class="list-style-ul">
                     <li class="list-li-style"
                     :class="{active: isActive === index}"
-                    @click="changeClass(index,userInfos.key)"
+                    @click="changeClass(index,userInfos)"
                     v-for="(userInfos,index) in filPerons"
                     :key="index"
                     >
@@ -678,23 +678,12 @@ export default {
     value2:false,
     value3:false,
     userInfo:[
-      {name:"张1",time:"02:30",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:1},
-      {name:"张2",time:"02:31",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:2},
-      {name:"张3",time:"02:32",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:3},
-      {name:"张4",time:"02:33",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:4},
-      {name:"张5",time:"02:34",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:5},
-      {name:"张6",time:"02:35",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:6},
-      {name:"张7",time:"02:36",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:7},
-      {name:"张8",time:"02:37",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:8},
-      {name:"张9",time:"02:38",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:9},
-      {name:"张7",time:"02:36",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:10},
-      {name:"张8",time:"02:37",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:11},
-      {name:"张9",time:"02:38",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:12},
-      {name:"张7",time:"02:36",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:13},
-      {name:"张8",time:"02:37",imageUrl:require('../assets/2.svg'),to:'/SessionNull',key:14},
-      {name:"张9",time:"02:38",imageUrl:require('../assets/2.svg'),to:'/firstChat',key:15},
-    ],
-    messageList1:[
+      {name:"张1",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      key:1,
+      messageList:[
       {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
       {messageClass:'chat-message-left',message:'在',time:"04:20,"},
       {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
@@ -721,202 +710,40 @@ export default {
       {messageClass:'chat-message-left',message:'在',time:"04:20,"},
       {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
       {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-    ],
-    messageList2:[
+      ],},
+      {name:"张2",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      key:2,
+      messageList:[
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
       {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-    ],
-    messageList3:[
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-    ],
-    messageList4:[
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-    ],
-    messageList5:[
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-    ],
-    messageList6:[
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-    ],
-    messageList7:[
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'在吗？',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'在',time:"04:20,"},
-    ],
-    messageList8:[
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
-      {messageClass:'chat-message-right',message:'你好',time:"04:20,"},
-      {messageClass:'chat-message-left',message:'我不好',time:"04:20,"},
+      {messageClass:'chat-message-left',message:'好',time:"04:20,"},
+      ],},
     ],
   }
 },
@@ -948,66 +775,9 @@ methods: {
           });
         });
     },
-  changeClass(i,k) {
+  changeClass(i,userInfos) {
     this.isActive = i;
-    switch (k) {
-    case 1:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList1}});
-      this.x.$emit('Hi', this.userInfo[0]);
-      break;
-    case 2:
-      this.x.$emit('Hi', this.userInfo[1]);
-      break;
-    case 3:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList2}});
-      this.x.$emit('Hi', this.userInfo[2]);
-      break;
-    case 4:
-      this.x.$emit('Hi', this.userInfo[3]);
-      break;
-    case 5:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList3}});
-      this.x.$emit('Hi', this.userInfo[4]);
-      break;
-    case 6:
-      this.x.$emit('Hi', this.userInfo[5]);
-      break;
-    case 7:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList4}});
-      this.x.$emit('Hi', this.userInfo[6]);
-      break;
-    case 8:
-      this.x.$emit('Hi', this.userInfo[7]);
-      break;
-    case 9:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList5}});
-      this.x.$emit('Hi', this.userInfo[8]);
-      break;
-    case 10:
-      this.x.$emit('Hi', this.userInfo[9]);
-      break;
-    case 11:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList6}});
-      this.x.$emit('Hi', this.userInfo[10]);
-      break;
-    case 12:
-      this.x.$emit('Hi', this.userInfo[11]);
-      break;
-    case 13:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList7}});
-      this.x.$emit('Hi', this.userInfo[12]);
-      break;
-    case 14:
-      this.x.$emit('Hi', this.userInfo[13]);
-      break;
-    case 15:
-      this.$router.push({path: 'firstChat', query: {name: this.messageList8}});
-      this.x.$emit('Hi', this.userInfo[14]);
-      break;
-    default:
-      console.log(k);
-      break;
-  }
+    this.x.$emit('Hi',userInfos);
   },
   changeClassColor(v) {
     this.isActiveColor = v;

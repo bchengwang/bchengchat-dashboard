@@ -4,7 +4,7 @@ import LoginPage from '../pages/LoginPage.vue'
 import RegistrationPage from '../pages/RegistrationPage.vue'
 import Forgotpsw from '../pages/Forgotpsw.vue'
 import SessionNull from '../pages/SessionNull.vue'
-import firstChat from '../pages/firstChat.vue'
+import firstChat from '../components/firstChat.vue'
 export default new VueRouter({
     routes:[
         {

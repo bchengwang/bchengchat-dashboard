@@ -5,9 +5,9 @@
       <div class="chat-head" :class="{headSmall: isSmall}" v-show="isShow1">
       <div class="chat-head-img">
         <div class="dot"></div>
-        <img :src="userImgUrl">
+        <img :src="List.imageUrl">
       </div>
-      <div class="user-text"><h5>{{ name }}</h5><p class="text-p">在线</p></div>
+      <div class="user-text"><h5>{{List.name}}</h5><p class="text-p">在线</p></div>
       <div class="right-btn">
         <div><a href="#" @click="centerDialogVisible = true"><i class="el-icon-phone-outline"></i></a></div>
         <el-dialog
@@ -71,7 +71,7 @@
     </div>
       <div class="chat-content" :class="{headSmall: isSmall}">
         <transition name="hello">
-          <router-view></router-view>
+          <first-chat :userMessageList="List"></first-chat>
         </transition>
       </div>
       <div class="chat-bottom" :class="{small: isSmall}">
@@ -113,12 +113,12 @@
             <div><i class="iconfont">&#xe646;</i></div>
             <div><i class="iconfont">&#xe664;</i></div>
           </div>
-          <p class="user-detail-header">Media 
+          <p class="user-detail-header">Media
             <div class="toggle-button">
             <i class="el-icon-arrow-left" @click="handleDivClickRight"></i>
             <i class="el-icon-arrow-right" @click="handleDivClickLeft"></i>
           </div>
-          </p>
+        </p>
           <div class="user-Media">
             <div class="user-Media-img-box">
               <div class="user-Media-img-box-1" :style="{ transform: 'translate3d(' + translate + 'px, 0px, 0px)' }">
@@ -167,7 +167,9 @@
 </template>
 
 <script>
+import firstChat from '../components/firstChat.vue';
 export default {
+  components: { firstChat },
   name: "RightChat",
   data() {
     return {
@@ -180,13 +182,12 @@ export default {
       value2:false,
       translate: 0,
       inputContent:"",
+      List:[],
       itemMessage:{
         messageClass:'chat-message-right',
         message:'',
         time:"04:20,"
       },
-      name:'',
-      userImgUrl:'',
     };
   },
   mounted(){
@@ -196,25 +197,17 @@ export default {
           this.translate = 0;
         }
       },3000)
-      console.log(this.$router);
-      this.x.$on('Hi',(dataList)=>{
-        console.log('我是RightChat组件我收到了数据',dataList);
-        this.name = dataList.name;
-        this.userImgUrl = dataList.imageUrl;
-        console.log(this.name);
-        console.log(this.userImgUrl);
-        if(this.name){
+      this.x.$on('Hi',(userInfos)=>{
+        this.List = userInfos;
         this.isShow1 = true;
-        console.log(this.isShow1,11213);
-      }
+        console.log(this.List,"12121");
       })
-
   },
   methods: {
     sendMessageItem(){
       this.itemMessage.message = this.inputContent;
       if(this.inputContent != ""){
-        this.x.$emit('hello',this.itemMessage)
+        this.x.$emit('sendMessage',this.itemMessage)
       }else{
         this.$notify({
           title: '警告',
