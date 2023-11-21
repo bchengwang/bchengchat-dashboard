@@ -2,7 +2,7 @@
 <div class="right-chat">
     <div class="chat-body">
       <div class="abc">
-      <div class="chat-head" :class="{headSmall: isSmall}" v-show="isShow1">
+      <div class="chat-head" :class="{headSmall: controlChatBoxWidth}" v-show="isShow1">
       <div class="chat-head-img">
         <div class="dot"></div>
         <img :src="List.imageUrl">
@@ -69,15 +69,44 @@
     </div>
     </div>
     </div>
-      <div class="chat-content" :class="{headSmall: isSmall}">
+      <div class="chat-content" :class="{headSmall: controlChatBoxWidth}">
         <transition name="hello">
           <first-chat :userMessageList="List"></first-chat>
         </transition>
       </div>
-      <div class="chat-bottom" :class="{small: isSmall}">
+      <div class="chat-bottom" :class="{small: controlChatBoxWidth}">
         <div>
           <div class="Chat-input-box">
-            <div class="microphone-style"><a href="#"><i class="el-icon-microphone"></i></a></div>
+            <div class="microphone-style">
+              <a href="#">
+                <i class="el-icon-microphone" @click="dialogVisible = true"></i>
+              </a>
+              <el-dialog
+                  title="录 音"
+                  :visible.sync="dialogVisible"
+                  width="30%"
+                  append-to-body
+                  :before-close="handleClose">
+                  <div>
+                    <div class="BaseRecorder-record">
+                      <button @click="startRecorder()">开始录音</button>
+                      <button @click="pauseRecorder()">暂停录音</button>
+                      <button @click="resumeRecorder()">继续录音</button>
+                      <button @click="stopRecorder()">结束录音</button>
+                    </div>
+                    <div class="BaseRecorder-play">
+                      <button @click="playRecorder()">录音播放</button>
+                      <button @click="pausePlayRecorder()">暂停播放</button>
+                      <button @click="resumePlayRecorder()">恢复播放</button>
+                      <button @click="stopPlayRecorder()">停止播放</button>
+                    </div>
+                  </div>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消发送</el-button>
+                    <el-button type="primary" @click="dialogVisible = false">确定发送</el-button>
+                  </span>
+                </el-dialog>
+            </div>
             <input type="text" placeholder="Type a message..." v-model="inputContent">
           <div class="send-style">
             <div class="paperclip-style"><a href="#"><i class="el-icon-paperclip"></i></a></div>
@@ -148,14 +177,14 @@
           <div class="user-Settings-1">
             <div><h6>Mute Notifications</h6></div>
             <div><el-switch
-              v-model="value1"
+              v-model="elSwitchCheckedFirst"
               active-color="#19a299">
             </el-switch></div>
           </div>
           <div class="user-Settings-1">
             <div><h6>Block Contact</h6></div>
             <div><el-switch
-              v-model="value2"
+              v-model="elSwitchCheckedSecond"
               active-color="#19a299">
             </el-switch></div>
           </div>
@@ -168,6 +197,8 @@
 
 <script>
 import firstChat from '../components/firstChat.vue';
+import Recorder from 'js-audio-recorder'
+let recorder = new Recorder();
 export default {
   components: { firstChat },
   name: "RightChat",
@@ -175,11 +206,12 @@ export default {
     return {
       isShow:true,
       isShow1:false,
-      isSmall:false,
+      controlChatBoxWidth:false,
       centerDialogVisible: false,
       centerDialogVisible2:false,
-      value1:true,
-      value2:false,
+      dialogVisible: false,
+      elSwitchCheckedFirst:true,
+      elSwitchCheckedSecond:false,
       translate: 0,
       inputContent:"",
       List:[],
@@ -191,19 +223,27 @@ export default {
     };
   },
   mounted(){
+    this.init()
     setInterval(()=>{
         this.translate -= 58
         if(this.translate === -754){
           this.translate = 0;
         }
       },3000)
-      this.x.$on('Hi',(userInfos)=>{
+      this.x.$on('sendMessageItem',(userInfos)=>{
         this.List = userInfos;
         this.isShow1 = true;
         console.log(this.List,"12121");
       })
   },
   methods: {
+    handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
     sendMessageItem(){
       this.itemMessage.message = this.inputContent;
       if(this.inputContent != ""){
@@ -219,7 +259,7 @@ export default {
     },
     btnClick(){
       this.isShow = !this.isShow;
-      this.isSmall = !this.isSmall;
+      this.controlChatBoxWidth = !this.controlChatBoxWidth;
     },
     handleDivClickLeft () {
       if (this.translate <= -754) {
@@ -232,12 +272,22 @@ export default {
     return;
   }
   this.translate += 58;
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
+.BaseRecorder-play button , .BaseRecorder-record button{
+  width: 120px;
+  height: 50px;
+  cursor: pointer;
+}
+::v-deep .el-dialog__header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  text-align: center;
+}
 .abc{
   height: 72px;
   background-color: white;

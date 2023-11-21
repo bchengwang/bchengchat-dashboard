@@ -606,19 +606,19 @@
                     <div class="Setting-item-box">
                       <div class="item-box"><h6>Read Receipts</h6></div>
                       <div class="item-checked-box">
-                        <el-switch v-model="value1" active-color="#19a299"></el-switch>
+                        <el-switch v-model="firstElSwitchChecked" active-color="#19a299"></el-switch>
                       </div>
                     </div>
                     <div class="Setting-item-box">
                       <div class="item-box"><h6>Show Profile Picture</h6></div>
                       <div class="item-checked-box">
-                        <el-switch v-model="value2" active-color="#19a299"></el-switch>
+                        <el-switch v-model="secondElSwitchChecked" active-color="#19a299"></el-switch>
                       </div>
                     </div>
                     <div class="Setting-item-box">
                       <div class="item-box"><h6>Allow Messages from<br>Strangers</h6></div>
                       <div class="last-item-checked-box">
-                        <el-switch v-model="value3" active-color="#19a299"></el-switch>
+                        <el-switch v-model="thirdlyElSwitchChecked" active-color="#19a299"></el-switch>
                       </div>
                     </div>
                   </div>
@@ -674,9 +674,9 @@ export default {
     centerDialogVisible: false,
     show: 1,
     imageUrl: require('@/assets/3.svg'),
-    value1:true,
-    value2:false,
-    value3:false,
+    firstElSwitchChecked:true,
+    secondElSwitchChecked:false,
+    thirdlyElSwitchChecked:false,
     userInfo:[
       {name:"张1",
       time:"02:30",
@@ -749,8 +749,8 @@ export default {
 },
 computed:{
     filPerons(){
-      return this.userInfo.filter((u)=>{
-        return u.name.indexOf(this.searchWord) !== -1
+      return this.userInfo.filter((f)=>{
+        return f.name.indexOf(this.searchWord) !== -1
       })
     }
   },
@@ -777,7 +777,7 @@ methods: {
     },
   changeClass(i,userInfos) {
     this.isActive = i;
-    this.x.$emit('Hi',userInfos);
+    this.x.$emit('sendMessageItem',userInfos);
   },
   changeClassColor(v) {
     this.isActiveColor = v;
