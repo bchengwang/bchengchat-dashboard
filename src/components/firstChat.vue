@@ -7,6 +7,7 @@
                 <i class="el-icon-caret-top"></i>
                 <div class="chat-message-text">
                     <span>{{ item.message }}</span>
+                    <audio controls :src="item.audioUrl"></audio>
                 </div>
                 <div class="chat-message-time"><span>{{item.time}}<i class="el-icon-check"></i></span></div>
             </li>
@@ -20,16 +21,20 @@ export default {
 name:"firstChat",
 data() {
     return {
-        time: '',
+        audioShowHide:true,
     };
 },
-props:["userMessageList"],
+props:["userMessageList","Src"],
 mounted(){
     this.x.$on('sendMessage',(data)=>{
-        this.time = new Date().toLocaleTimeString()
-        this.userMessageList.messageList.push({messageClass:'chat-message-right',message:data.message,time:this.time})
+        this.userMessageList.messageList.push({messageClass:data.messageClass,message:data.message,time:data.time})
+    })
+    this.x.$on('sendAudioMessage',(user)=>{
+        this.userMessageList.messageList.push({messageClass:user.messageClass,message:user.message,time:user.time,audioUrl:user.audioUrl})
     })
 },
+methods:{
+}
 }
 </script>
 

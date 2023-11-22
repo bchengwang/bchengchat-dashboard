@@ -3,8 +3,10 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router/index'
 import ElementUI from 'element-ui';
+import AudioVisual from 'vue-audio-visual'
 Vue.use(ElementUI);
 Vue.use(VueRouter);
+Vue.use(AudioVisual);
 
 Vue.config.productionTip = false;
 

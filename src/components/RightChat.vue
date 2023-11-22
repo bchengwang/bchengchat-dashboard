@@ -71,7 +71,7 @@
     </div>
       <div class="chat-content" :class="{headSmall: controlChatBoxWidth}">
         <transition name="hello">
-          <first-chat :userMessageList="List"></first-chat>
+          <first-chat :userMessageList="List" :Src="audioSrc"></first-chat>
         </transition>
       </div>
       <div class="chat-bottom" :class="{small: controlChatBoxWidth}">
@@ -98,12 +98,20 @@
                       <button @click="playRecorder()">录音播放</button>
                       <button @click="pausePlayRecorder()">暂停播放</button>
                       <button @click="resumePlayRecorder()">恢复播放</button>
-                      <button @click="stopPlayRecorder()">停止播放</button>
+                      <button @click="stopPlayRecorder()">停止播放</button><br>
+                    <audio controls :src="audioSrc"></audio>
+                      <av-bars
+                      caps-color="#FFF"
+                      :bar-color="['#f00', '#ff0', '#0f0']"
+                      canv-fill-color="#000"
+                      :caps-height="2"
+                      :src="audioSrc"
+                    ></av-bars>
                     </div>
                   </div>
                   <span slot="footer" class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消发送</el-button>
-                    <el-button type="primary" @click="dialogVisible = false">确定发送</el-button>
+                    <el-button type="primary" @click="sendAudio">确定发送</el-button>
                   </span>
                 </el-dialog>
             </div>
@@ -204,6 +212,7 @@ export default {
   name: "RightChat",
   data() {
     return {
+      recorder:null,
       isShow:true,
       isShow1:false,
       controlChatBoxWidth:false,
@@ -214,16 +223,24 @@ export default {
       elSwitchCheckedSecond:false,
       translate: 0,
       inputContent:"",
+      audioObject:{},
+      audioSrc:'',
       List:[],
       itemMessage:{
         messageClass:'chat-message-right',
         message:'',
-        time:"04:20,"
+        time:"04:20,",
+        audioUrl:'',
       },
+      itemAudioMessage:{
+        messageClass:'chat-message-right',
+        message:'',
+        time:"04:20,",
+        audioUrl:'',
+      }
     };
   },
   mounted(){
-    this.init()
     setInterval(()=>{
         this.translate -= 58
         if(this.translate === -754){
@@ -247,6 +264,7 @@ export default {
     sendMessageItem(){
       this.itemMessage.message = this.inputContent;
       if(this.inputContent != ""){
+        this.itemMessage.time = new Date().toLocaleTimeString()
         this.x.$emit('sendMessage',this.itemMessage)
       }else{
         this.$notify({
@@ -273,6 +291,29 @@ export default {
   }
   this.translate += 58;
     },
+    startRecorder(){
+      recorder.start()
+    },
+    stopRecorder(){
+      recorder.stop()
+    },
+    playRecorder(){
+      recorder.play()
+    },
+    sendAudio(){
+      this.dialogVisible = false;
+      const formData = new FormData()
+      const blob = recorder.getWAVBlob()// 获取wav格式音频数据
+      // 此处获取到blob对象后需要设置fileName满足当前项目上传需求，其它项目可直接传把blob作为file塞入formData
+      const newBolb = new Blob([blob], { type: 'audio/wav' })
+      const fileOfBlob = new File([newBolb], new Date().getTime() + '.wav')
+      formData.append('file', fileOfBlob)
+      const url = window.URL.createObjectURL(fileOfBlob)
+      this.audioSrc = url;
+      this.itemAudioMessage.time = new Date().toLocaleTimeString()
+      this.itemAudioMessage.audioUrl = this.audioSrc
+      this.x.$emit('sendAudioMessage',this.itemAudioMessage)
+    }
   },
 };
 </script>
