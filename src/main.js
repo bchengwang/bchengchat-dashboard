@@ -4,10 +4,11 @@ import VueRouter from 'vue-router'
 import router from './router/index'
 import ElementUI from 'element-ui';
 import AudioVisual from 'vue-audio-visual'
+import Contextmenu from 'vue-contextmenujs';
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(AudioVisual);
-
+Vue.use(Contextmenu);
 Vue.config.productionTip = false;
 
 const Demo = Vue.extend({});

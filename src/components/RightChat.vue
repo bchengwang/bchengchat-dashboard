@@ -74,53 +74,41 @@
           <first-chat :userMessageList="List" :Src="audioSrc"></first-chat>
         </transition>
       </div>
-      <div class="chat-bottom" :class="{small: controlChatBoxWidth}">
+      <div class="chat-bottom" :class="{small: controlChatBoxWidth}" :style="styleObject">
         <div>
           <div class="Chat-input-box">
             <div class="microphone-style">
               <a href="#">
-                <i class="el-icon-microphone" @click="dialogVisible = true"></i>
+                <i class="el-icon-microphone" @click="inputShowClick"></i>
               </a>
-              <el-dialog
-                  title="录 音"
-                  :visible.sync="dialogVisible"
-                  width="30%"
-                  append-to-body
-                  :before-close="handleClose">
-                  <div>
-                    <div class="BaseRecorder-record">
-                      <button @click="startRecorder()">开始录音</button>
-                      <button @click="pauseRecorder()">暂停录音</button>
-                      <button @click="resumeRecorder()">继续录音</button>
-                      <button @click="stopRecorder()">结束录音</button>
-                    </div>
-                    <div class="BaseRecorder-play">
-                      <button @click="playRecorder()">录音播放</button>
-                      <button @click="pausePlayRecorder()">暂停播放</button>
-                      <button @click="resumePlayRecorder()">恢复播放</button>
-                      <button @click="stopPlayRecorder()">停止播放</button><br>
-                    <audio controls :src="audioSrc"></audio>
-                      <av-bars
-                      caps-color="#FFF"
-                      :bar-color="['#f00', '#ff0', '#0f0']"
-                      canv-fill-color="#000"
-                      :caps-height="2"
-                      :src="audioSrc"
-                    ></av-bars>
-                    </div>
-                  </div>
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取消发送</el-button>
-                    <el-button type="primary" @click="sendAudio">确定发送</el-button>
-                  </span>
-                </el-dialog>
             </div>
-            <input type="text" placeholder="Type a message..." v-model="inputContent">
+            <div class="record" v-show="!inputShow">
+              <button @click="startRecorder()">
+                <span v-show="textShow">点击开始录制</span>
+                <span v-show="!textShow">录制中...</span>
+              </button></div>
+            <input type="text" placeholder="Type a message..." v-model="inputContent" v-show="inputShow">
           <div class="send-style">
-            <div class="paperclip-style"><a href="#"><i class="el-icon-paperclip"></i></a></div>
-            <div><a @click="sendMessageItem()"><i class="el-icon-s-promotion"></i></a></div>
+            <div class="paperclip-style">
+              <a href="#">
+                <el-upload action="#" :on-change="handleChange" :file-list="fileList" :auto-upload="false">
+                  <i class="el-icon-paperclip"></i>
+                </el-upload>
+              </a>
+            </div>
+            <div><a @click="estimateSend()"><i class="el-icon-s-promotion"></i></a></div>
           </div>
           </div>
+        </div>
+        <div class="referenceMessageStyle">
+            <div><span>{{ referenceMessageObject.referenceName }}:</span></div>
+            <div>
+              <span v-show="referenceMessageObject.referenceType==='Text'">{{ referenceMessageObject.referenceMessage }}</span>
+              <img :src="referenceMessageObject.referenceImgUrl" v-show="referenceMessageObject.referenceType==='Image'">
+              <audio controls :src="referenceMessageObject.referenceAudioUrl" v-show="referenceMessageObject.referenceType==='Audio'"></audio>
+              <video :src="referenceMessageObject.referenceVideoUrl" controls="controls" v-show="referenceMessageObject.referenceType==='Video'"></video>
+            </div>
+            <div class="deleteButtonStyle" @click="deleteReferenceMessage"><span>X</span></div>
         </div>
       </div>
     </div>
@@ -212,9 +200,17 @@ export default {
   name: "RightChat",
   data() {
     return {
+      fileList:[],
+      uploadFiles:"",
+      inputShow:true,
+      clicks:1,
+      textShow:true,
       recorder:null,
       isShow:true,
       isShow1:false,
+      styleObject:{
+        height:"38px",
+      },
       controlChatBoxWidth:false,
       centerDialogVisible: false,
       centerDialogVisible2:false,
@@ -227,17 +223,39 @@ export default {
       audioSrc:'',
       List:[],
       itemMessage:{
-        messageClass:'chat-message-right',
+        messageClass:'chat-text-message-right',
+        message:'',
+        time:"04:20,",
+      },
+      itemAudioMessage:{
+        messageClass:'chat-audio-message-right',
         message:'',
         time:"04:20,",
         audioUrl:'',
       },
-      itemAudioMessage:{
-        messageClass:'chat-message-right',
+      itemImageMessage:{
+        messageClass:'chat-img-message-right',
         message:'',
         time:"04:20,",
-        audioUrl:'',
-      }
+        imgUrl:'',
+      },
+      itemVideoMessage:{
+        messageClass:'chat-video-message-right',
+        message:'',
+        time:"04:20,",
+        videoUrl:'',
+      },
+      referenceMessageObject:{
+        referenceName:"",
+        referenceMessage:'',
+        referenceImgUrl:'',
+        referenceAudioUrl:'',
+        referenceVideoUrl:'',
+        messageType:"reference",
+        message:'',
+        time:"04:20,",
+        messageClass:'chat-reference-message-right',
+      },
     };
   },
   mounted(){
@@ -250,10 +268,49 @@ export default {
       this.x.$on('sendMessageItem',(userInfos)=>{
         this.List = userInfos;
         this.isShow1 = true;
-        console.log(this.List,"12121");
+      })
+      this.x.$on('user-name',(userName)=>{
+        this.inputContent = '@'+userName
+      })
+      this.x.$on('sendReferenceMessage',(m)=>{
+        this.referenceMessageObject.referenceName = m.referenceName
+        this.referenceMessageObject.referenceMessage = m.referenceMessage
+        this.referenceMessageObject.referenceType = m.referenceType
+        this.referenceMessageObject.referenceImgUrl = m.referenceImgUrl
+        this.referenceMessageObject.referenceAudioUrl = m.referenceAudioUrl
+        this.referenceMessageObject.referenceVideoUrl = m.referenceVideoUrl
+        this.styleObject.height = "120px";
       })
   },
   methods: {
+    estimateSend(){
+      if(this.styleObject.height == "120px"){
+        this.styleObject.height = "38px";
+        this.sendReferenceMessage()
+        this.inputContent=''
+      }else{
+        this.sendMessageItem()
+      }
+    },
+    deleteReferenceMessage(){
+      this.styleObject.height = "38px";
+    },
+    handleChange(file, fileLists) { //文件数量改变
+			console.log(file,'1');
+      console.log(file.raw.type);
+			// 本地服务器路径
+			console.log(URL.createObjectURL(file.raw),"3");
+      this.uploadFiles = URL.createObjectURL(file.raw)
+      if(file.raw.type.indexOf("image") != -1){
+        this.itemImageMessage.imgUrl = this.uploadFiles
+        this.itemImageMessage.time = new Date().toLocaleTimeString()
+        this.x.$emit('sendImageMessage',this.itemImageMessage)
+      }else if(file.raw.type.indexOf("video") != -1){
+        this.itemVideoMessage.videoUrl = this.uploadFiles
+        this.itemVideoMessage.time = new Date().toLocaleTimeString()
+        this.x.$emit('sendVideoMessage',this.itemVideoMessage)
+      }
+	},
     handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {
@@ -275,6 +332,11 @@ export default {
       }
       this.inputContent = ''
     },
+    sendReferenceMessage(){
+      this.referenceMessageObject.time = new Date().toLocaleTimeString()
+      this.referenceMessageObject.message = this.inputContent
+      this.x.$emit('sendReferenceMessageObject',this.referenceMessageObject)
+    },
     btnClick(){
       this.isShow = !this.isShow;
       this.controlChatBoxWidth = !this.controlChatBoxWidth;
@@ -292,13 +354,19 @@ export default {
   this.translate += 58;
     },
     startRecorder(){
-      recorder.start()
+      if(this.clicks === 1){
+        recorder.start()
+        this.clicks = 2
+        this.textShow = !this.textShow;
+      }else if(this.clicks === 2){
+        this.clicks = 1
+        this.textShow =!this.textShow;
+        this.stopRecorder()
+        this.sendAudio()
+      }
     },
     stopRecorder(){
       recorder.stop()
-    },
-    playRecorder(){
-      recorder.play()
     },
     sendAudio(){
       this.dialogVisible = false;
@@ -313,12 +381,75 @@ export default {
       this.itemAudioMessage.time = new Date().toLocaleTimeString()
       this.itemAudioMessage.audioUrl = this.audioSrc
       this.x.$emit('sendAudioMessage',this.itemAudioMessage)
+    },
+    inputShowClick(){
+      this.inputShow =!this.inputShow
     }
   },
 };
 </script>
 
 <style scoped>
+.referenceMessageStyle video{
+  width: 120px;
+}
+.referenceMessageStyle img{
+  width: 120px;
+}
+.deleteButtonStyle span:hover{
+  color: #8A98AC;
+}
+.deleteButtonStyle:hover{
+  background-color: #bdbdbd;
+}
+.deleteButtonStyle span{
+
+  font-size: 15px;
+  line-height: 20px;
+  position: relative;
+  top: -7px;
+  left: 5px;
+}
+.deleteButtonStyle{
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  margin-left: 10px;
+}
+.referenceMessageStyle div{
+  background-color: #d2d2d2;
+}
+.referenceMessageStyle{
+  display: flex;
+  font-size: 22px;
+  margin-left: 31px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 14px;
+}
+::v-deep .el-upload-list{
+  display: none;
+}
+.record button span{
+  font-size: 20px;
+  color: #333;
+}
+.record button:active{
+  background-color: #d2d2d2
+}
+.record button{
+  width: 100%;
+  height: 38px;
+  background-color: rgb(247, 235, 235);
+  border: none;
+  transition: all 0.2s;
+  border-radius: 5px;
+}
+.record{
+  width: 100%;
+  height: 38px;
+}
 .BaseRecorder-play button , .BaseRecorder-record button{
   width: 120px;
   height: 50px;
@@ -332,6 +463,7 @@ export default {
 .abc{
   height: 72px;
   background-color: white;
+  width: 1597px;
 }
 .hello-leave,.hello-enter-to {
   opacity: 1;
@@ -431,7 +563,6 @@ export default {
 }
 .chat-content{
   height: 772px;
-  overflow: hidden;
   position: fixed;
   top: 73px;
   left: 320px;
