@@ -8,7 +8,7 @@ import firstChat from '../components/firstChat.vue'
 export default new VueRouter({
     routes:[
         {
-            path:'/',
+            path:'/HomePage',
             component:HomePage,
             children:[
                 {
@@ -27,7 +27,7 @@ export default new VueRouter({
             ]
         },
         {
-            path:'/LoginPage',
+            path:'/',
             component:LoginPage,
         },
         {

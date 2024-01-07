@@ -8,7 +8,7 @@
           :class="{ColorActive: isActiveColor === 1}"
           @click="changeClassColor(1)"
           >
-            <i class="el-icon-chat-round" @click="changeNumber(1)"></i>
+            <i class="el-icon-chat-round" @click="changeNumber(1)" title="聊天窗口"></i>
           </div>
           <transition name="fade">
           <div class="friend-list" v-show="show === 1">
@@ -18,11 +18,11 @@
                   <div class="row">
                     <div class="col-1">
                       <img src="../assets/10001.svg" alt="logo" />
-                      <div><h5>Chat</h5></div>
+                      <div><h5>聊天窗口</h5></div>
                     </div>
                     <div class="col-2">
                       <el-tooltip class="item" effect="dark" content="Logout" placement="right">
-                          <router-link to="/LoginPage"><i class="iconfont">&#xe66b;</i></router-link>
+                          <router-link to="/"><i class="iconfont">&#xe66b;</i></router-link>
                       </el-tooltip>
                     </div>
                   </div>
@@ -46,21 +46,19 @@
                     @click="changeClass(index,userInfos)"
                     v-for="(userInfos,index) in filPerons"
                     :key="index"
+                    @contextmenu.prevent="onContextmenuList(userInfos.key)"
                     >
-                      <router-link :to="userInfos.to" slot="reference" >
                       <div class="list-li-content">
                         <div class="message-alert"></div>
                         <img :src="userInfos.imageUrl" alt="头像">
                         <div>
                           <h5 class="list-li-h5-style">
                             {{ userInfos.name }}
-                            <h5 class="abc-h5" @click="deleteMessage(userInfos.key)">删除</h5>
                             <span>{{ userInfos.time }}</span>
                           </h5>
                           <p class="list-li-p-style">Waiting for module 1 to finish...</p>
                         </div>
                       </div>
-                      </router-link>
                     </li>
                   </ul>
                 </div>
@@ -71,7 +69,7 @@
         </el-tab-pane>
         <el-tab-pane label="">
           <div slot="label" class="el-title-i-style" :class="{ColorActive: isActiveColor === 2}" @click="changeClassColor(2)">
-            <i class="el-icon-edit" @click="changeNumber(2)"></i>
+            <i class="el-icon-edit" @click="changeNumber(2)" title="联系人"></i>
           </div>
           <transition name="fade">
           <div class="friend-list" v-show="show === 2">
@@ -81,7 +79,7 @@
                   <div class="row">
                     <div class="col-1">
                       <img src="../assets/10001.svg" alt="logo" />
-                      <div><h5>New Chat</h5></div>
+                      <div><h5>联系人</h5></div>
                     </div>
                     <div class="col-2">
                       <el-button type="text" @click="centerDialogVisible = true">
@@ -94,24 +92,21 @@
                         width="500px"
                         center>
                         <div class="dialog-input-box">
-                          <input type="text" placeholder="Enter Group Name">
+                          <input type="text" placeholder="群聊名称" v-model="groupChatName">
                         </div>
                         <div class="dialog-textarea-box">
-                          <textarea rows="3" placeholder="Enter Group Description"></textarea>
+                          <textarea rows="3" placeholder="群聊介绍" v-model="GroupChatIntroduction"></textarea>
                         </div>
                         <p class="p-text-style">Add Users</p>
-                        <div class="icon-box">
-                          <el-tooltip class="item" effect="dark" content="Emily Cook" placement="top">
-                            <a href="#"><img src="../assets/10008.svg" alt="1"></a>
-                          </el-tooltip>
-                          <el-tooltip class="item" effect="dark" content="Lauren Gotlib" placement="top">
-                            <a href="#"><img src="../assets/3.svg" alt="2"></a>
-                          </el-tooltip>
-                          <el-tooltip class="item" effect="dark" content="Noir Ajkeban" placement="top">
-                            <a href="#"><img src="../assets/1.svg" alt="3"></a>
-                          </el-tooltip>
-                          <el-tooltip class="item" effect="dark" content="Add New User" placement="top">
-                            <a href="#"><img src="../assets/8.svg" alt="4"></a>
+                        <div class="icon-box">  
+                          <el-tooltip
+                          class="item"
+                          effect="dark"
+                          :content="i.name"
+                          placement="top"
+                          v-for="(i,index) in userInfo"
+                          :key="index" v-if="i.InfoType === 'Chat'">
+                            <a href="#"><img :src="i.imageUrl" alt="1"></a>
                           </el-tooltip>
                         </div>
                         <div class="dialog-content-search-box">
@@ -124,100 +119,22 @@
                         </div>
                         <div class="dialog-content-list-box">
                           <ul class="dialog-content-list-ul-box">
-                            <li>
-                              <img src="../assets/10008.svg">
+                            <li v-for="(item,index) in userInfo" :key="index" v-show="item.InfoType === 'Chat'">
+                              <img :src="item.imageUrl">
                               <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
+                                <h5><span>{{item.name}}</span></h5>
                                 <p>Hey there. I am on Chalty.</p>
                               </div>
-                              <div class="checkbox-box"><el-checkbox :checked=true></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
+                              <div class="checkbox-box">
+                                <el-checkbox :checked='item.done' @change="handleCheck(index)"></el-checkbox>
                               </div>
-                              <div class="checkbox-box"><el-checkbox :checked=true></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=true></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=false></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=true></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=true></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=false></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=false></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=false></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=false></el-checkbox></div>
-                            </li>
-                            <li>
-                              <img src="../assets/10008.svg">
-                              <div class="dialog-content-list-ul-li-text-box">
-                                <h5><span>Emily Cook</span></h5>
-                                <p>Hey there. I am on Chalty.</p>
-                              </div>
-                              <div class="checkbox-box"><el-checkbox :checked=false></el-checkbox></div>
                             </li>
                           </ul>
                         </div>
                         <span slot="footer" class="dialog-footer">
-                          <el-button type="primary" @click="centerDialogVisible = false">
+                          <el-button type="primary" @click="createGroupChat">
                             <i class="el-icon-plus"></i>
-                            Create Group
+                            创建群聊
                           </el-button>
                         </span>
                       </el-dialog>
@@ -225,223 +142,85 @@
                   </div>
                 </div>
                 <div class="search-box">
-                  <form>
                     <div class="search-content">
-                      <input type="text" class="search-input-style" placeholder="Search">
+                      <input type="text" class="search-input-style" placeholder="Search" v-model="searchValue">
                       <div class="search-btn-box">
-                        <button class="search-btn-style">
+                        <button class="search-btn-style" @click="search">
                           <i class="iconfont" >&#xe65f;</i>
                         </button>
                       </div>
                     </div>
-                  </form>
                 </div>
                 <div class="list">
-                  <ul class="list-style-ul">
-                    <li class="list-li-style" :class="{active: isActive === 1}" @click="changeClass(1)">
+                  <div :class="{hidden: isHidden}" class="ListStyle-1">
+                    <div class="inform-ListStyle-1">
+                      <div class="inform-ListStyle-1-title-1" @click="friendInform()">好友通知<i class="el-icon-arrow-right"></i></div>
+                      <div class="inform-ListStyle-1-title-1" @click="groupInform()">群通知<i class="el-icon-arrow-right"></i></div>
+                      <el-collapse v-model="activeNames">
+                        <el-collapse-item title="群聊列表" name="1">
+                          <ul class="list-style-ul">
+                            <li class="list-li-style"
+                            :class="{active: isActive === index}"
+                            @click="changeClass(index)"
+                            v-for="(contacts,index) in userInfo"
+                            :key="index" v-show="contacts.InfoType === 'groupChat'">
+                              <a href="#">
+                              <div class="list-li-content">
+                                <div class="message-alert"></div>
+                                <img :src="contacts.imageUrl" alt="头像">
+                                <div>
+                                  <h5 class="list-li-h5-style">
+                                    {{ contacts.name }}
+                                    <span>{{ contacts.time }}</span>
+                                  </h5>
+                                  <p class="list-li-p-style">Waiting for module 1 to finish...</p>
+                                </div>
+                              </div>
+                              </a>
+                            </li>
+                          </ul>
+                        </el-collapse-item>
+                        <el-collapse-item title="好友列表" name="2">
+                          <ul class="list-style-ul">
+                            <li class="list-li-style"
+                            :class="{active: isActive === index}"
+                            @click="changeClass(index)"
+                            v-for="(contacts,index) in userInfo"
+                            :key="index" v-show="contacts.InfoType === 'Chat'">
+                              <a href="#">
+                              <div class="list-li-content">
+                                <div class="message-alert"></div>
+                                <img :src="contacts.imageUrl" alt="头像">
+                                <div>
+                                  <h5 class="list-li-h5-style">
+                                    {{ contacts.name }}
+                                    <span>{{ contacts.time }}</span>
+                                  </h5>
+                                  <p class="list-li-p-style">Waiting for module 1 to finish...</p>
+                                </div>
+                              </div>
+                              </a>
+                            </li>
+                          </ul>
+                        </el-collapse-item>
+                      </el-collapse>
+                    </div>
+                  </div>
+                  <ul class="list-style-ul" :class="{hidden: !isHidden}">
+                    <li class="list-li-style"
+                    :class="{active: isActive === index}"
+                    @click="changeClass(index)"
+                    v-for="(contacts,index) in filPerons2"
+                    :key="index"
+                    @contextmenu.prevent="onContextmenuList1"
+                    >
                       <a href="#">
                       <div class="list-li-content">
                         <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
+                        <img :src="contacts.imageUrl" alt="头像">
                         <div>
                           <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 2}" @click="changeClass(2)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 3}" @click="changeClass(3)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 4}" @click="changeClass(4)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 5}" @click="changeClass(5)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 6}" @click="changeClass(6)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 7}" @click="changeClass(7)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 8}" @click="changeClass(8)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 9}" @click="changeClass(9)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 10}" @click="changeClass(10)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 11}" @click="changeClass(11)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 12}" @click="changeClass(12)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 13}" @click="changeClass(13)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
-                          </h5>
-                          <p class="list-li-p-style">Waiting for module 1 to finish...</p>
-                        </div>
-                      </div>
-                      </a>
-                    </li>
-                    <li class="list-li-style" :class="{active: isActive === 14}" @click="changeClass(14)">
-                      <a href="#">
-                      <div class="list-li-content">
-                        <div class="message-alert"></div>
-                        <img src="../assets/10008.svg" alt="头像">
-                        <div>
-                          <h5 class="list-li-h5-style">
-                            Emily Cook
-                            <span>02:30 pm</span>
+                            {{ contacts.name }}
                           </h5>
                           <p class="list-li-p-style">Waiting for module 1 to finish...</p>
                         </div>
@@ -457,7 +236,7 @@
         </el-tab-pane>
         <el-tab-pane label="">
           <div slot="label" class="el-title-i-style" :class="{ColorActive: isActiveColor === 3}" @click="changeClassColor(3)">
-            <i class="el-icon-user" @click="changeNumber(3)"></i>
+            <i class="el-icon-user" @click="changeNumber(3)" title="个人信息"></i>
           </div>
           <transition name="fade">
             <div class="friend-list" v-show="show === 3">
@@ -467,7 +246,7 @@
                     <div class="row">
                       <div class="col-1">
                         <img src="../assets/10001.svg" alt="logo" />
-                        <div><h5>My Profile</h5></div>
+                        <div><h5>个人信息</h5></div>
                       </div>
                     </div>
                   </div>
@@ -483,8 +262,8 @@
                           <img v-if="imageUrl" :src="imageUrl" class="avatar">
                           <i class="el-icon-camera"></i>
                         </el-upload>
-                        <h5>Will Patinson</h5>
-                        <p>Florida, USA</p>
+                        <h5>{{ userDataObject.name }}</h5>
+                        <p>{{ userDataObject.Location }}</p>
                       </div>
                       <div class="personalInformation-box">
                         <ul>
@@ -493,7 +272,7 @@
                             <div>
                               <p>Username</p>
                               <div>
-                                <input type="text" value="Will Patinson">
+                                <input type="text" :value="userDataObject.name" ref="Username">
                                 <div>
                                   <button>Update</button>
                               </div>
@@ -505,7 +284,7 @@
                             <div>
                               <p>Location</p>
                               <div>
-                                <input type="text" value="Florida, USA">
+                                <input type="text" :value="userDataObject.Location" ref="Location">
                                 <div>
                                   <button>Update</button>
                                 </div>
@@ -517,7 +296,7 @@
                             <div>
                               <p>Status</p>
                               <div>
-                                <input type="text" value="I am on Gappa.">
+                                <input type="text" :value="userDataObject.Status" ref="Status">
                                 <div>
                                   <button>Update</button>
                                 </div>
@@ -529,7 +308,7 @@
                             <div>
                               <p>Email ID</p>
                               <div>
-                                <input type="text" value="demo@example.com">
+                                <input type="text" :value="userDataObject.Email" ref="Email">
                                 <div>
                                   <button>Update</button>
                                 </div>
@@ -541,7 +320,7 @@
                             <div>
                               <p>Password</p>
                               <div>
-                                <input type="Password" value="********">
+                                <input type="Password" :value="userDataObject.mima" ref="mima">
                                 <div>
                                   <button>Update</button>
                                 </div>
@@ -550,6 +329,7 @@
                           </li>
                         </ul>
                       </div>
+                      <div class="save-button-style"><button @click="saveUserData()">保存个人身份信息</button></div>
                     </div>
                   </div>
                 </div>
@@ -559,7 +339,7 @@
         </el-tab-pane>
         <el-tab-pane label="">
           <div slot="label" class="el-title-i-style" :class="{ColorActive: isActiveColor === 4}" @click="changeClassColor(4)">
-            <i class="el-icon-setting" @click="changeNumber(4)"></i>
+            <i class="el-icon-setting" @click="changeNumber(4)" title="设置"></i>
           </div>
           <transition name="fade">
             <div class="friend-list" v-show="show === 4">
@@ -569,7 +349,7 @@
                     <div class="row">
                       <div class="col-1">
                         <img src="../assets/10001.svg" alt="logo" />
-                        <div><h5>Setting</h5></div>
+                        <div><h5>设置</h5></div>
                       </div>
                       <div class="col-2">
                         <el-dropdown trigger="click">
@@ -667,6 +447,24 @@ export default {
   name: "LeftChat",
   data() {
   return {
+    groupChatName:"",
+    GroupChatIntroduction:"",
+    activeNames: ['0'],
+    searchValue:"",
+    isHidden:false,
+    zhanghao:'',
+    activeUser:{},
+    userDataArrayIndex:0,
+    newUserDataObject:{
+      id:0,
+      zhanghao: "admin",
+      mima: "",
+      name:'',
+      Location:'',
+      Status:'',
+      Email:'',
+    },
+    userDataObject:{},
     searchWord:'',
     isActive: '',
     tabPosition: 'bottom',
@@ -677,103 +475,18 @@ export default {
     firstElSwitchChecked:true,
     secondElSwitchChecked:false,
     thirdlyElSwitchChecked:false,
-    userInfo:[
-      {name:"张1",
-      time:"02:30",
-      imageUrl:require('../assets/2.svg'),
-      to:'/firstChat',
-      key:1,
-      messageList:[
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
-      ],},
-      {name:"张2",
-      time:"02:30",
-      imageUrl:require('../assets/2.svg'),
-      to:'/firstChat',
-      key:2,
-      messageList:[
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      ],},
-      {name:"相亲相爱一家人",
-      time:"02:30",
-      imageUrl:require('../assets/1.svg'),
-      to:'/firstChat',
-      key:3,
-      messageList:[
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
-      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
-      ],},
-    ],
+    userInfo:[],
+    filPerons2:[],
+    verificationInformation:"",
+  }
+},
+watch:{
+  searchValue:{
+    handler(newValue){
+      if (newValue === "") {
+        this.isHidden = false
+      }
+    }
   }
 },
 computed:{
@@ -784,8 +497,208 @@ computed:{
     }
   },
 methods: {
+  createGroupChat(){
+    if(this.groupChatName != ""){
+      //创建groupChatName接收用户输入的群聊名称
+    const groupChatName = this.groupChatName;
+    //创建GroupChatIntroduction接收用户输入的群聊介绍
+    const GroupChatIntroduction = this.GroupChatIntroduction;
+    //把用户选择的好友过滤出来赋值给GroupChatMember
+    const GroupChatMember = this.userInfo.filter((f)=>{
+      return f.done === true;
+    })
+    //获取当前时间
+    const time = new Date().toLocaleTimeString()
+    //创建群聊对象
+    const groupChatObj = {
+      name:groupChatName,//群聊名称
+      GroupChatIntroduction:GroupChatIntroduction,//群聊介绍
+      GroupChatMember:GroupChatMember,//群聊中的用户
+      imageUrl:require('../assets/10001.svg'),//群聊头像
+      time:time,//群聊创建时间
+      InfoType:'groupChat',//类型
+      key:this.userInfo.length+1,//唯一标识
+      messageList:[],//群聊消息列表
+    }
+    //将群聊对象添加到用户的群聊列表中
+    this.userInfo.push(groupChatObj);
+    //获取当前登录的用户信息
+    const activeUser = JSON.parse(localStorage.getItem('activeUser'))
+    //将当前登录用户的好友列表替换掉获取到的当前登录信息
+    activeUser.userMessageList = this.userInfo;
+    //获取所有用户信息赋值给userData
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    GroupChatMember.forEach((f)=>{
+      const uIndex = userData.findIndex((i)=>{
+        return i.zhanghao === f.zhanghao
+      })
+      userData[uIndex].userMessageList.push(groupChatObj)
+      console.log(userData,'group');
+      console.log(uIndex,"zhanghao");
+    })
+    //获取当前登录用户在所有用户中的索引并赋值给index
+    const index = userData.findIndex((i)=>{
+      return i.zhanghao === activeUser.zhanghao
+    })
+    //将当前登录用户信息替换掉所有用户信息中的当前登录用户信息
+    userData.splice(index,1,activeUser);
+    //将当前所有用户信息替换掉本地存储中的所有用户信息
+    localStorage.setItem('userData',JSON.stringify(userData));
+    //关闭对话框
+    this.centerDialogVisible = false;
+    }else{
+      this.$notify.error({
+          title: '错误',
+          message: '群聊名称不能为空，请重新输入！'
+        });
+      }
+  },
+  handleCheck(index){
+    this.userInfo[index].done = !this.userInfo[index].done
+  },
+  groupInform(){
+    if(this.activeUser.groupChatNotification.length === 0){
+      this.x.$emit("isNull", "群聊");
+      // this.x.$emit("groupHidden","群聊");
+    }else{
+      this.x.$emit("groupHidden","群聊");
+    }
+  },
+  friendInform(){
+    if(this.activeUser.friendRequestList.length === 0){
+      this.x.$emit("isNull", "好友");
+    }else{
+      this.x.$emit("controlHidden","好友");
+    }
+  },
+  search(){
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    const filPerons = userData.filter((f)=>{
+      return f.zhanghao === this.searchValue
+    })
+    this.filPerons2 = filPerons
+    console.log(this.filPerons2,"filPerons2");
+    this.isHidden = true
+  },
+  //保存用户信息事件
+  saveUserData(){
+    //以下六行代码是为了保存用户输入的个人信息，其中第六行是为了给每个用户信息对象设置一个唯一标识
+    this.newUserDataObject.name = this.$refs.Username.value//用户输入的名字
+    this.newUserDataObject.Location = this.$refs.Location.value//用户输入的地址
+    this.newUserDataObject.Status = this.$refs.Status.value//用户输入的状态
+    this.newUserDataObject.Email = this.$refs.Email.value//用户输入的邮箱
+    this.newUserDataObject.mima = this.$refs.mima.value//用户输入的密码
+    this.newUserDataObject.zhanghao = this.activeUser.zhanghao//账号
+    this.newUserDataObject.id = this.userDataArrayIndex + 1//设置的唯一标识ID
+    //创建一个user数组用来接收localStorage中存的用户信息
+    const user = JSON.parse(localStorage.getItem('userData'));
+    //将用户输入的个人信息对象通过splice方法替换进入user数组中
+    user.splice(this.userDataArrayIndex,1,this.newUserDataObject)
+    //把替换好的user数组重新存储到localStorage中
+    localStorage.setItem('userData', JSON.stringify(user))
+    //弹出保存成功的提示
+  this.$notify({
+    title: '保存个人信息成功',
+    message: '请重新登录账号，查看最新个人信息。',
+    type: 'success'
+  });
+  this.$router.replace('/')
+  },
+  // 鼠标右键事件
+  onContextmenuList(key) {
+    this.contextMenuData2 = [
+    {
+        label: '删除',
+        onClick: () => {
+          this.deleteMessage(key);
+        }
+    },
+];
+    this.$contextmenu({
+        items: this.contextMenuData2,
+        event, // 鼠标事件信息
+        customClass: 'custom-class', // 自定义菜单 class
+        zIndex: 3, // 菜单样式 z-index
+        minWidth: 230 // 主菜单最小宽度
+    });
+    return false;
+  },
+  onContextmenuList1() {
+    this.contextMenuData3 = [
+    {
+        label: '发送好友申请',
+        onClick: () => {
+          this.sendFriendRequest();
+        }
+    },
+];
+    this.$contextmenu({
+        items: this.contextMenuData3,
+        event, // 鼠标事件信息
+        customClass: 'custom-class', // 自定义菜单 class
+        zIndex: 3, // 菜单样式 z-index
+        minWidth: 230 // 主菜单最小宽度
+    });
+    return false;
+  },
+  sendFriendRequest(){
+    const user = this.filPerons2[0]
+    this.$prompt('请填写验证消息', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          this.$message({
+            type: 'success',
+            message: '好友申请发送成功，请等待对方同意'
+          });
+          const time = new Date().toLocaleTimeString()
+          user.friendRequestList.push({
+          name:this.activeUser.name,
+          imageUrl:this.activeUser.imageUrl,
+          zhanghao:this.activeUser.zhanghao,
+          verificationInformation:value,
+          messageType:"applicationMessage",
+          message:"请求添加为好友",
+          isShow:true,
+          isShow2:false,
+          isShow3:false,
+          show1:true,
+          time:time,})
+          user.friendRequestList.verificationInformation = this.verification
+          const friendRequestList = this.friendRequestList
+          const userData = JSON.parse(localStorage.getItem("userData"))
+          const index = userData.findIndex((f)=>{
+            return f.zhanghao === user.zhanghao
+          })
+          userData.splice(index,1,user)
+          const activeUser = this.activeUser
+          activeUser.friendRequestList.push({
+            name:user.name,
+            imageUrl:user.imageUrl,
+            zhanghao:user.zhanghao,
+            verificationInformation:value,
+            messageType:"validationMessage",
+            message:"正在验证你的申请",
+            show1:false,
+            show2:true,
+            show3:false,
+            show4:false,
+            time:time,
+          })
+          const index2 = userData.findIndex((u)=>{
+            return u.zhanghao === activeUser.zhanghao
+          })
+          userData.splice(index2,1,activeUser)
+          localStorage.setItem("userData",JSON.stringify(userData))
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
+  },
   deleteMessage(id){
-    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+    this.$confirm('是否删除这条消息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -803,21 +716,30 @@ methods: {
             message: '已取消删除'
           });
         });
-    },
+  },
   changeClass(i,userInfos) {
     this.isActive = i;
     this.x.$emit('sendMessageItem',userInfos);
+    this.x.$emit("controlHidden1", true);
   },
   changeClassColor(v) {
     this.isActiveColor = v;
   },
   changeNumber(n){
     this.show = n;
+    switch (n) {
+      case 1:
+        this.x.$emit("controlHidden1", true);
+      break;
+      case 2:
+        this.x.$emit("controlHidden2", true);
+      break;
+    }
   },
   handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
+  },
+  beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -828,11 +750,110 @@ methods: {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
-      },
-}
+  },
+},
+mounted() {
+  this.$nextTick(() => {
+     //读取浏览器存储的当前登录用户信息
+     const user = JSON.parse(localStorage.getItem('activeUser'))
+    if(user.friendRequestList.length != 0) {
+      this.$notify({
+          title: '验证消息',
+          message: '您有一条新的申请，请点击联系人，前去处理',
+          position: 'bottom-right'
+        });
+    }
+    console.log(user,"当前登录用户信息");
+    //把当前登录的用户信息赋值给activeUser方便保存用户信息时使用
+    this.activeUser = user
+    //读取浏览器本地存储的用户信息并赋值给userData方便JSON.parse方法读取
+    const userData = localStorage.getItem('userData')
+    //创建一个数组把过滤后的用户信息赋值给userDataList
+    const userDataList = JSON.parse(userData).filter((item)=>{
+      //判断所有用户信息和当前登录的用户信息进行对比并返回
+      return user.id === item.id
+    })
+    //创建一个index值用来接收当前登录的账号数组中的索引值，方便保存用户后修改的信息时判断替换哪一条
+    const index = JSON.parse(userData).findIndex((item)=>{
+      //判断条件：当前登录的用户名字和所有用户信息名字进行对比并返回索引值
+      return user.id === item.id
+    })
+    //将得出的索引值赋值给userDataArrayIndex以便保存用户信息时使用
+    this.userDataArrayIndex = index;
+    //把过滤后的用户信息赋值给this.userDataObject方便模板中使用
+    this.userDataObject = userDataList[0]
+    console.log(userDataList[0],"userData");
+    //把过滤后的用户历史消息数组对象赋值给this.userInfo方便模板中使用
+    this.userInfo = this.userDataObject.userMessageList
+    //将当前登录的用户信息通过全局事件总线发送给FirstChat组件
+    this.x.$emit("sendUsers",user,this.userDataArrayIndex)
+  })
+},
 }
 </script>
 <style scoped>
+.ListStyle-1[data-v-02c954af] {
+  height: 748px;
+  overflow-y: scroll;
+}
+.ListStyle-1::-webkit-scrollbar{
+  display:none
+  }
+::v-deep .el-collapse-item__header:hover{
+  background-color: #F1F3F4;
+}
+::v-deep .el-collapse-item__header{
+  border-bottom: none;
+  height: 26px;
+  padding: 15px;
+  font-size: 20px;
+  color: #263A5B;
+  font-weight: bold;
+  cursor: pointer;
+}
+.el-collapse {
+  border:none;
+}
+.inform-ListStyle-1-title-1:hover{
+  background-color: #F1F3F4;
+}
+.inform-ListStyle-1-title-1 i{
+  float: right;
+  margin-top: 3px;
+  margin-right: 7px;
+}
+.inform-ListStyle-1-title-1{
+  font-size: 20px;
+  font-weight: bold;
+  color: #263a5b;
+  padding: 15px;
+  cursor: pointer;
+}
+.ListStyle-1{
+  height:748px
+}
+.hidden{
+  display: none;
+}
+.save-button-style button:hover{
+  background-color: #737373;
+  transition: all 0.2s ;
+}
+.save-button-style button{
+  width: 120px;
+  height: 35px;
+  background-color: #999;
+  border: none;
+  border-radius:5px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #fff;
+}
+.save-button-style{
+
+}
 .list-li-style:hover a div div H5 H5{
   display: inline;
 }
@@ -1004,6 +1025,7 @@ right: 0;
   border-radius: 0 3px 3px 0;
   padding: 5px 15px 3px 5px;
   height: 38px;
+  cursor: pointer;
 }
 .list{
   width: auto;
@@ -1013,7 +1035,7 @@ right: 0;
 }
 .list-style-ul{
   overflow-y: auto;
-  height: 710px;
+  height: auto;
 }
 .list-style-ul::-webkit-scrollbar{
   display: none;
@@ -1026,11 +1048,12 @@ right: 0;
 .list-li-style a{
   text-decoration: none;
   position: relative;
-  top: -18px;
+  top: 0px;
 }
 .list-li-content{
   display: flex;
   align-items: flex-start;
+  margin-top: -20px;
 }
 .list-li-content img{
   width: 40px;

@@ -4,13 +4,13 @@
             <img :src="headImg" class="headImg">
             <h5 @click="optFor(name)" class="name-H5">{{ name }}</h5>
         </div>
-        <i class="el-icon-caret-top"></i>
         <div class="chat-message-text" @contextmenu.prevent="onContextmenu">
             <el-image
             style="width: 500px;"
             :src="imgUrl"
             :preview-src-list="srcList"
             @click="ceshi"
+            :class="{imageMessageStyle1:ControlImgSize}"
             >
             </el-image>
         </div>
@@ -25,6 +25,7 @@ props:["imgUrl","time",'headImg','name'],
 data(){
     return {
         srcList:[],
+        ControlImgSize:false,
         referenceImageObject:{
             referenceName:"",
             referenceImgUrl:"",
@@ -32,7 +33,22 @@ data(){
         },
     }
 },
+mounted() {
+    setTimeout(()=>{
+        this.estimateImageSize();
+    },200)
+},
 methods:{
+    estimateImageSize(){
+        this.$nextTick(()=>{
+        console.log(document.querySelector('.el-image__inner').offsetHeight,"视频高度为");
+        if(document.querySelector('.el-image__inner').offsetHeight>300){
+            this.ControlImgSize=true;
+        }else{
+            this.ControlImgSize=false;
+        }
+        })
+    },
     onRunCode(m) {
         this.x.$emit('sendReferenceMessage',m)
 },
@@ -68,6 +84,9 @@ optFor(value){
 </script>
 
 <style>
+.imageMessageStyle1{
+    width: 200px !important;
+}
 .chat-img-message-right .userStyle{
     position: relative;
     top: 25px;

@@ -4,9 +4,13 @@
             <img :src="headImg" class="headImg">
             <h5 @click="optFor(name)" class="name-H5">{{ name }}</h5>
         </div>
-        <i class="el-icon-caret-top"></i>
         <div class="chat-message-text" @contextmenu.prevent="onContextmenu">
-            <video width="400" controls="controls" :src="videoUrl">
+            <video controls="controls"
+            :src="videoUrl"
+            id="videoMessage"
+            class="videoMessageStyle"
+            :class="{videoMessageStyle1: ControlSize}"
+            ref="video">
             </video>
         </div>
         <div class="chat-message-time"><span><i class="el-icon-check">{{ time }}</i></span></div>
@@ -18,6 +22,7 @@ export default {
 name:"videoMessage",
 data() {
     return {
+        ControlSize:false,
         referenceVideoObject:{
             referenceName:"",
             referenceMessage:"",
@@ -26,8 +31,23 @@ data() {
         },
     };
 },
+mounted() {
+    setTimeout(()=>{
+        this.estimateSize();
+    },200)
+},
 props:["videoUrl","time",'headImg','name'],
 methods:{
+    estimateSize(){
+        this.$nextTick(()=>{
+        console.log(this.$refs.video.offsetHeight,"视频高度为");
+        if(this.$refs.video.offsetHeight>300){
+            this.ControlSize=true;
+        }else{
+            this.ControlSize=false;
+        }
+        })
+    },
 optFor(value){
         this.x.$emit('user-name', value);
     },
@@ -55,11 +75,18 @@ optFor(value){
     });
     return false;
 },
-}
+},
 }
 </script>
 
 <style>
+.videoMessageStyle1{
+    width: 200px !important;
+}
+.videoMessageStyle{
+    border-radius: 10px;
+    width: 500px;
+}
 .chat-video-message-right .userStyle{
     position: relative;
     top: 25px;

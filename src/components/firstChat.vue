@@ -1,39 +1,41 @@
 <template>
-<div class="firstChat" @click="ceshi1">
-    <div class="firstChat-body">
+<div class="firstChat" @click="ceshi2">
+    <div class="firstChat-body" ref="firstChat">
         <div class="chat-day"><span>Today</span></div>
-        <ul class="firstChat-body-content">
-            <li :class="item.messageClass" v-for="(item,index) in userMessageList.messageList" :key="index">
+        <ul class="firstChat-body-content" ref="firstChatContent">
+            <li :class="item.messageClass" v-for="(item,index) in userDataObject.messageList" :key="index">
                 <textMessage
                 :message="item.message"
                 :time="item.time"
                 :headImg="item.headImg"
                 :name="item.name"
-                v-show="item.messageType === 'text'">
+                v-if="item.messageType === 'text'">
                 </textMessage>
                 <audioMessage
                 :audioUrl="item.audioUrl"
                 :time="item.time"
                 :headImg="item.headImg"
                 :name="item.name"
-                v-show="item.messageType === 'audio'">
+                :audioDuration="item.audioDuration"
+                v-if="item.messageType === 'audio'">
                 </audioMessage>
                 <imgMessage
-                v-show="item.messageType === 'img'"
+                v-if="item.messageType === 'img'"
                 :imgUrl="item.imgUrl"
                 :time="item.time"
                 :headImg="item.headImg"
                 :name="item.name">
                 </imgMessage>
                 <videoMessage
-                v-show="item.messageType === 'video'"
+                v-if="item.messageType === 'video'"
                 :videoUrl="item.videoUrl"
                 :time="item.time"
                 :headImg="item.headImg"
+                ref="video"
                 :name="item.name">
                 </videoMessage>
                 <referenceMessage
-                v-show="item.messageType === 'reference'"
+                v-if="item.messageType === 'reference'"
                 :time="item.time"
                 :headImg="item.headImg"
                 :name="item.name"
@@ -68,10 +70,58 @@ components: {
 data() {
     return {
         audioShowHide:true,
+        userObj:{},
+        userDataObject:{},
+        userIndex:0,
+        userDataListIndex:0,
+        messageList:[],
     };
 },
 props:["userMessageList","Src"],
+watch:{
+    userMessageList:{
+        handler(newValue,oldValue){
+            //
+            const userList = this.userObj.userMessageList
+            const userDataObj = userList.filter((i)=>{
+            return newValue.name === i.name;
+        })
+            this.userDataObject = userDataObj[0];
+            this.messageList = newValue.messageList
+        const index = userList.findIndex((item)=>{
+            //判断条件：当前登录的用户名字和所有用户信息名字进行对比并返回索引值
+            return newValue.name === item.name
+        })
+            this.userIndex = index
+        }
+    },
+    messageList:{
+        handler(newValue,oldValue){
+            this.userDataObject.messageList = newValue;
+            this.userObj.userMessageList.splice(this.userIndex,1,this.userDataObject)
+            const userData = JSON.parse(localStorage.getItem("userData"))
+            userData.splice(this.userDataListIndex,1,this.userObj)
+            localStorage.setItem("userData", JSON.stringify(userData))
+        }
+    }
+},
 mounted(){
+    //接收到当前登录用户的信息和在localStorage数组中的索引
+    this.x.$on("sendUsers",(user,userIndex)=>{
+        //从localStorage中获取用户信息并赋值给userData
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        //根据当前登录用户过滤出用户信息并返回赋值给users
+        const users = userData.filter((item)=>{
+            //过滤条件
+            return user.id === item.id;
+        })
+        //将过滤出的用户信息赋值给userObj转换成对象
+        const userObj = users[0]
+        //将过滤的用户信息赋值给data中的userObj
+        this.userObj = userObj
+        //将发送过来的索引值赋值给data中的userDataListIndex
+        this.userDataListIndex = userIndex
+    })
     this.x.$on('sendReferenceMessageObject',(info)=>{
         this.userMessageList.messageList.push({
             name:"我",
@@ -88,6 +138,7 @@ mounted(){
         })
     })
     this.x.$on('sendMessage',(data)=>{
+        this.RollingEvent()
         this.userMessageList.messageList.push({
             name:"我",
             headImg:require('../assets/1.svg'),
@@ -97,6 +148,7 @@ mounted(){
             messageType:"text"})
     })
     this.x.$on('sendAudioMessage',(user)=>{
+        this.RollingEvent()
         this.userMessageList.messageList.push({
             name:"我",
             headImg:require('../assets/1.svg'),
@@ -104,9 +156,11 @@ mounted(){
             message:user.message,
             time:user.time,
             audioUrl:user.audioUrl,
+            audioDuration:user.audioDuration,
             messageType:"audio"})
     })
     this.x.$on('sendImageMessage',(user)=>{
+        this.RollingEvent()
         this.userMessageList.messageList.push({
             name:"我",
             headImg:require('../assets/1.svg'),
@@ -117,6 +171,7 @@ mounted(){
             messageType:"img"})
     })
     this.x.$on('sendVideoMessage',(user)=>{
+        this.RollingEvent()
         this.userMessageList.messageList.push({
             name:"我",
             headImg:require('../assets/1.svg'),
@@ -128,14 +183,23 @@ mounted(){
     })
 },
 methods:{
-    ceshi1(){
-        console.log(this.userMessageList.messageList,"数组的值为");
+    ceshi2(){
+        console.log(this.userMessageList);
+    },
+    RollingEvent(){
+        this.$nextTick(() => {
+        let firstChat = this.$refs.firstChat;
+        firstChat.scrollTo({ top: firstChat .scrollHeight, behavior: 'smooth' });
+        });
     }
 }
 }
 </script>
 
-<style> 
+<style>
+.el-image img{
+    border-radius: 10px;
+}
 .chat-reference-message-right .userStyle{
     position: relative;
     right: -70px;
@@ -190,7 +254,6 @@ methods:{
     top: -30px;
 }
 .chat-video-message-right .chat-message-text{
-    background-color: #19a299;
     color: #ffffff;
     padding: 5px 10px;
     display: inline-block;
@@ -198,16 +261,6 @@ methods:{
     font-size: 14px;
     font-weight: 350;
     text-align: left;
-}
-.chat-video-message-right .el-icon-caret-top{
-    transform: rotate(180deg);
-}
-.chat-video-message-right .el-icon-caret-top{
-    position: absolute;
-    right: -18px;
-    bottom: 237px;
-    font-size: 35px;
-    color: #19a299;
 }
 .chat-video-message-right .image-message{
     position: relative;
@@ -229,7 +282,6 @@ methods:{
     height: 400px;
 }
 .chat-img-message-right .chat-message-text{
-    background-color: #19a299;
     color: #ffffff;
     padding: 5px 10px;
     display: inline-block;
@@ -237,16 +289,6 @@ methods:{
     font-size: 14px;
     font-weight: 350;
     text-align: left;
-}
-.chat-img-message-right .el-icon-caret-top{
-    transform: rotate(180deg);
-}
-.chat-img-message-right .el-icon-caret-top{
-    position: absolute;
-    right: -17px;
-    bottom: 27px;
-    font-size: 35px;
-    color: #19a299;
 }
 .chat-img-message-right .image-message{
     position: relative;
@@ -277,6 +319,7 @@ methods:{
     font-size: 14px;
     font-weight: 350;
     text-align: left;
+    position: relative;
 }
 .chat-audio-message-right .el-icon-caret-top{
     transform: rotate(180deg);
@@ -305,7 +348,7 @@ methods:{
     text-align:right;
     position: relative;
     list-style: none;
-    height: 160px;
+    height: 125px;
 }
 .chat-text-message-right h5{
     cursor: pointer;
@@ -362,8 +405,8 @@ methods:{
 }
 .audio-message .el-icon-caret-top{
     position: relative !important;
-    top: -38px !important;
-    right: -338px !important;
+    top: -59px !important;
+    right: -138px !important;
 }
 .chat-message-right .audio-message{
     position: relative;
@@ -404,7 +447,7 @@ methods:{
     list-style: none;
 }
 .firstChat{
-    height: 672px;
+    height: 655px;
 }
 .firstChat-body{
     padding-top: 30px;

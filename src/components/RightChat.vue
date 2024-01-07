@@ -16,8 +16,8 @@
             :visible.sync="centerDialogVisible"
             width="30%"
             center>
-            <img src="../assets/3.svg" class="img-style">
-            <h5>Jessica Meir</h5>
+            <img :src="List.imageUrl" class="img-style">
+            <h5>{{ List.name }}</h5>
             <p>Texas, USA</p>
             <span slot="footer" class="dialog-footer">
               <el-button type="primary" @click="centerDialogVisible = false">
@@ -37,8 +37,8 @@
         :visible.sync="centerDialogVisible2"
         width="30%"
         center>
-        <img src="../assets/3.svg" class="img-style">
-        <h5>Jessica Meir</h5>
+        <img :src="List.imageUrl" class="img-style">
+        <h5>{{ List.name }}</h5>
         <p>Texas, USA</p>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="centerDialogVisible2 = false">
@@ -67,14 +67,16 @@
         </el-dropdown>
       </a></div>
     </div>
-    </div>
+  </div>
+  <div class="chatHead" v-show="isShow2" :class="{headSmall: controlChatBoxWidth}"><span>{{ messageType }}通知</span></div>
     </div>
       <div class="chat-content" :class="{headSmall: controlChatBoxWidth}">
-        <transition name="hello">
-          <first-chat :userMessageList="List" :Src="audioSrc"></first-chat>
-        </transition>
+          <first-chat :userMessageList="List" :Src="audioSrc" v-show="isShow4"></first-chat>
+          <friendNotification v-if="isShow5"></friendNotification>
+          <groupNotification v-if="isShow7"></groupNotification>
+          <div class="nullMessage-style" v-show="isShow6"><h1>暂无{{ messageType }}验证消息</h1></div>
       </div>
-      <div class="chat-bottom" :class="{small: controlChatBoxWidth}" :style="styleObject">
+      <div class="chat-bottom" :class="{small: controlChatBoxWidth}" :style="styleObject" v-show="isShow3">
         <div>
           <div class="Chat-input-box">
             <div class="microphone-style">
@@ -83,9 +85,9 @@
               </a>
             </div>
             <div class="record" v-show="!inputShow">
-              <button @click="startRecorder()">
-                <span v-show="textShow">点击开始录制</span>
-                <span v-show="!textShow">录制中...</span>
+              <button @mousedown="StartPressing()" @mouseup="EndPress()">
+                <span v-show="textShow">长按开始录制</span>
+                <span v-show="!textShow">录制中... {{ SpeechTime }}s</span>
               </button></div>
             <input type="text" placeholder="Type a message..." v-model="inputContent" v-show="inputShow">
           <div class="send-style">
@@ -121,8 +123,8 @@
       </div>
       <div class="chat-user-info-body">
         <div class="user-bar">
-          <img src="../assets/10008.svg" alt="用户头像">
-          <h5>Emily Cook</h5>
+          <img :src="List.imageUrl" alt="用户头像">
+          <h5>{{ List.name }}</h5>
           <p>New York, USA</p>
         </div>
         <div class="user-detail">
@@ -138,12 +140,12 @@
             <div><i class="iconfont">&#xe646;</i></div>
             <div><i class="iconfont">&#xe664;</i></div>
           </div>
-          <p class="user-detail-header">Media
+          <div class="user-detail-header">Media
             <div class="toggle-button">
             <i class="el-icon-arrow-left" @click="handleDivClickRight"></i>
             <i class="el-icon-arrow-right" @click="handleDivClickLeft"></i>
           </div>
-        </p>
+        </div>
           <div class="user-Media">
             <div class="user-Media-img-box">
               <div class="user-Media-img-box-1" :style="{ transform: 'translate3d(' + translate + 'px, 0px, 0px)' }">
@@ -193,21 +195,31 @@
 
 <script>
 import firstChat from '../components/firstChat.vue';
+import friendNotification from '../components/friendNotification.vue'
+import groupNotification from '../components/groupNotification.vue'
 import Recorder from 'js-audio-recorder'
 let recorder = new Recorder();
 export default {
-  components: { firstChat },
+  components: { firstChat,friendNotification,groupNotification },
   name: "RightChat",
   data() {
     return {
+      SpeechTime:0,
+      timer:'',
       fileList:[],
       uploadFiles:"",
       inputShow:true,
-      clicks:1,
       textShow:true,
       recorder:null,
       isShow:true,
       isShow1:false,
+      isShow2:false,
+      isShow3:true,
+      isShow4:false,
+      isShow5:false,
+      isShow6:false,
+      isShow7:true,
+      messageType:"",
       styleObject:{
         height:"38px",
       },
@@ -232,6 +244,7 @@ export default {
         message:'',
         time:"04:20,",
         audioUrl:'',
+        audioDuration:"",
       },
       itemImageMessage:{
         messageClass:'chat-img-message-right',
@@ -259,6 +272,35 @@ export default {
     };
   },
   mounted(){
+    this.x.$on("groupHidden",(value)=>{
+      this.isShow4 = false;
+      this.isShow5 = false;
+      this.isShow6 = false;
+      this.isShow7 = true;
+      this.messageType = value;
+    })
+    this.x.$on("isNull",(value)=>{
+      this.messageType = value;
+      this.isShow6 = true;
+      this.isShow1 = false;
+      this.isShow2 = true;
+    })
+    this.x.$on("controlHidden",(value)=>{
+      this.messageType = value;
+      this.isShow5 = true;
+      this.isShow1 = false;
+      this.isShow2 = true;
+    })
+    this.x.$on("controlHidden1",(value)=>{
+      this.isShow4 = true;
+      this.isShow5 = false;
+      this.isShow6 = false;
+      this.isShow2 = false;
+    })
+    this.x.$on("controlHidden2",(value)=>{
+      this.isShow4 = false;
+      this.isShow6 = false;
+    })
     setInterval(()=>{
         this.translate -= 58
         if(this.translate === -754){
@@ -283,6 +325,20 @@ export default {
       })
   },
   methods: {
+    StartPressing(){
+      recorder.start()
+      this.textShow = !this.textShow;
+      this.timer = setInterval(()=>{
+        this.SpeechTime = this.SpeechTime + 1
+      },1000)
+    },
+    EndPress(){
+      this.textShow =!this.textShow;
+      this.stopRecorder()
+      this.sendAudio(this.SpeechTime)
+      clearInterval(this.timer)
+      this.SpeechTime = 0
+    },
     estimateSend(){
       if(this.styleObject.height == "120px"){
         this.styleObject.height = "38px";
@@ -309,15 +365,16 @@ export default {
         this.itemVideoMessage.videoUrl = this.uploadFiles
         this.itemVideoMessage.time = new Date().toLocaleTimeString()
         this.x.$emit('sendVideoMessage',this.itemVideoMessage)
+        this.x.$emit('notificationCall',this.itemVideoMessage)
       }
-	},
+	  },
     handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {
             done();
           })
           .catch(_ => {});
-      },
+    },
     sendMessageItem(){
       this.itemMessage.message = this.inputContent;
       if(this.inputContent != ""){
@@ -344,8 +401,8 @@ export default {
     handleDivClickLeft () {
       if (this.translate <= -754) {
     return this.translate = 0;
-  }
-  this.translate -= 58;
+    }
+      this.translate -= 58;
     },
     handleDivClickRight () {
       if (this.translate === 0) {
@@ -353,22 +410,10 @@ export default {
   }
   this.translate += 58;
     },
-    startRecorder(){
-      if(this.clicks === 1){
-        recorder.start()
-        this.clicks = 2
-        this.textShow = !this.textShow;
-      }else if(this.clicks === 2){
-        this.clicks = 1
-        this.textShow =!this.textShow;
-        this.stopRecorder()
-        this.sendAudio()
-      }
-    },
     stopRecorder(){
       recorder.stop()
     },
-    sendAudio(){
+    sendAudio(duration){
       this.dialogVisible = false;
       const formData = new FormData()
       const blob = recorder.getWAVBlob()// 获取wav格式音频数据
@@ -380,6 +425,7 @@ export default {
       this.audioSrc = url;
       this.itemAudioMessage.time = new Date().toLocaleTimeString()
       this.itemAudioMessage.audioUrl = this.audioSrc
+      this.itemAudioMessage.audioDuration = duration;
       this.x.$emit('sendAudioMessage',this.itemAudioMessage)
     },
     inputShowClick(){
@@ -390,6 +436,18 @@ export default {
 </script>
 
 <style scoped>
+.nullMessage-style h1{
+  font-size: 90px;
+  position: relative;
+  left: 464px;
+  top: 300px;
+}
+.chatHead{
+  font-size: 25px;
+  color: #263a5b;
+  padding: 15px;
+  font-weight: bold;
+}
 .referenceMessageStyle video{
   width: 120px;
 }
@@ -562,7 +620,7 @@ export default {
   left: 320px;
 }
 .chat-content{
-  height: 772px;
+  height: 817px;
   position: fixed;
   top: 73px;
   left: 320px;
@@ -816,7 +874,7 @@ export default {
   float: right;
   width: 40px;
   position: relative;
-  top: -37px;
+  top: 1px;
   left: -6px;
 }
 .el-icon-arrow-left{

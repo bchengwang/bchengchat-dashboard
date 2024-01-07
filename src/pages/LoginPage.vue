@@ -5,27 +5,28 @@
         <form action="#">
           <div class="form-head">
             <router-link to="/">
-              <img src="../assets/10001.svg" alt="LOGO" />
+              <img src="../assets/10001.svg" alt="LOGO" v-show="hide">
+              <img :src="imgUrl" alt="头像" v-show="!hide">
             </router-link>
           </div>
           <h4>Log in !</h4>
           <div class="form-group">
-            <input type="text" placeholder="Username" v-model="Username" />
+            <input type="text" placeholder="账号" v-model="Username" />
           </div>
           <div class="form-group">
-            <input type="text" placeholder="Password" v-model="Password" />
+            <input type="text" placeholder="密码" v-model="Password" />
           </div>
           <div class="form-row">
-            <div class="col"><el-checkbox></el-checkbox>Remember Me</div>
+            <div class="col"><el-checkbox :checked="checked" @change="handleCheck"></el-checkbox>已阅读并同意用户协议</div>
             <div class="col">
-              <router-link to="/Forgotpsw">Forgot Password?</router-link>
+              <router-link to="/Forgotpsw">忘记密码?</router-link>
             </div>
           </div>
-          <div class="btn-login" @click="loginCheck()">Log in</div>
+          <div class="btn-login" @click="loginCheck()">登录</div>
         </form>
         <p class="bottom-text">
-          Don't have a account?
-          <router-link to="/RegistrationPage">Sign up</router-link>
+          没有账号？
+          <router-link to="/RegistrationPage">注册账号</router-link>
         </p>
       </div>
     </div>
@@ -39,43 +40,414 @@ export default {
     return {
       Username: "",
       Password: "",
+      hide:true,
+      checked:false,
+      imgUrl:'',
       userList: [
         {
           id: 1,
           zhanghao: "admin1",
-          mima: "password",
+          mima: "password1",
+          name:'张一',
+          Location:'北京',
+          Status:'在线',
+          Email:'demo1@example.com',
+          imageUrl:require('../assets/123.png'),
+          groupChatNotification:[],
+          friendRequestList:[],
+          userMessageList:[
+      {name:"张1",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      InfoType:'Chat',
+      done:false,
+      key:1,
+      messageList:[
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+      {name:"张2",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      InfoType:'Chat',
+      done:false,
+      key:2,
+      messageList:[
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+      {name:"相亲相爱一家人",
+      time:"02:30",
+      imageUrl:require('../assets/1.svg'),
+      to:'/firstChat',
+      InfoType:'groupChat',
+      key:3,
+      messageList:[
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+          ],
         },
         {
           id: 2,
           zhanghao: "admin2",
-          mima: "password",
+          mima: "password2",
+          name:'张二',
+          Location:'上海',
+          Status:'在线',
+          Email:'demo2@example.com',
+          imageUrl:require('../assets/456.png'),
+          groupChatNotification:[],
+          friendRequestList:[],
+          userMessageList:[
+      {name:"章鱼哥",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      InfoType:'Chat',
+      done:false,
+      key:1,
+      messageList:[
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+      {name:"派大星",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      InfoType:'Chat',
+      done:false,
+      key:2,
+      messageList:[
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+      {name:"比奇堡一家人",
+      time:"02:30",
+      imageUrl:require('../assets/1.svg'),
+      to:'/firstChat',
+      key:3,
+      InfoType:'groupChat',
+      messageList:[
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+          ],
         },
         {
           id: 3,
           zhanghao: "admin3",
-          mima: "password",
+          mima: "password3",
+          name:'张三',
+          Location:'天津',
+          Status:'在线',
+          Email:'demo3@example.com',
+          imageUrl:require('../assets/789.png'),
+          groupChatNotification:[],
+          friendRequestList:[],
+          userMessageList:[
+      {name:"喜羊羊",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      InfoType:'Chat',
+      done:false,
+      key:1,
+      messageList:[
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'在吗？',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'在',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+      {name:"懒羊羊",
+      time:"02:30",
+      imageUrl:require('../assets/2.svg'),
+      to:'/firstChat',
+      InfoType:'Chat',
+      done:false,
+      key:2,
+      messageList:[
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/1.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/2.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+      {name:"羊村一家人",
+      time:"02:30",
+      imageUrl:require('../assets/1.svg'),
+      to:'/firstChat',
+      InfoType:'groupChat',
+      key:3,
+      messageList:[
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张1',headImg:require('../assets/1.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张2',headImg:require('../assets/3.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'我',headImg:require('../assets/2.svg'),messageClass:'chat-message-right',message:'你好',time:"04:20,",audioUrl:'',messageType:'text',},
+      {name:'张3',headImg:require('../assets/10008.svg'),messageClass:'chat-message-left',message:'好',time:"04:20,",audioUrl:'',messageType:'text',},
+      ],},
+          ],
         },
       ],
     };
     },
+    mounted() {
+      if(localStorage.getItem('userData') === null){
+          localStorage.setItem('userData', JSON.stringify(this.userList));
+        }else{
+          console.log("浏览器已保存过userData");
+          // localStorage.setItem('userData', JSON.stringify(this.userList));
+        }
+    },
     methods: {
+    handleCheck(){
+      this.checked = !this.checked;
+    },
     loginCheck() {
-        const user = this.userList.filter((item) => {
+        // const user = this.userList.filter((item) => {
+        // return this.Username === item.zhanghao;
+        // });
+        const userPassword = JSON.parse(localStorage.getItem('userData'));
+        const user = userPassword.filter((item) => {
         return this.Username === item.zhanghao;
         });
         if(user.length <= 0){
         this.$message.error('用户不存在!!!');
         }
         if(user[0].mima === this.Password){
-        this.$message.success('登录成功');
-        this.$router.replace('/')
+          if(this.checked === true){
+          this.$message.success('登录成功');
+          this.$router.replace('/HomePage')
+          }else{
+            this.$notify.info({
+          title: '注意',
+          message: '请阅读并勾选用户协议'
+        });
+          }
         }else{
         this.$message.error('密码错误!!!');
         }
+        this.$nextTick(() => {
+          localStorage.setItem('activeUser',JSON.stringify(user[0]))
+        })
         console.log(user);
     },
     },
-};
+    watch:{
+      Username:{
+        handler(newVal){
+          if(newVal === ''){
+            this.hide = true;
+          }
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        userData.forEach((item) => {
+          if(item.zhanghao === this.Username){
+            this.imgUrl = item.imageUrl
+            this.hide = false
+          }
+        });
+        }
+      }
+    }
+}
 </script>
 
 <style>
@@ -171,6 +543,7 @@ export default {
   text-decoration: none;
   font-size: 18px;
   color: white;
+  cursor: pointer;
 }
 .bottom-text {
   margin-top: 16px;
