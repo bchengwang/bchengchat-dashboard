@@ -11,10 +11,10 @@
           </div>
           <h4>Log in !</h4>
           <div class="form-group">
-            <input type="text" placeholder="账号" v-model="Username" />
+            <input type="text" placeholder="账号" v-model="Username" @keyup.enter="changeFocus(Username)"/>
           </div>
           <div class="form-group">
-            <input type="text" placeholder="密码" v-model="Password" />
+            <input type="text" placeholder="密码" v-model="Password" ref="password" @keyup.enter="loginCheck()"/>
           </div>
           <div class="form-row">
             <div class="col"><el-checkbox :checked="checked" @change="handleCheck"></el-checkbox>已阅读并同意用户协议</div>
@@ -400,6 +400,7 @@ export default {
     methods: {
     handleCheck(){
       this.checked = !this.checked;
+      this.$refs.password.focus()
     },
     loginCheck() {
         // const user = this.userList.filter((item) => {
@@ -422,6 +423,8 @@ export default {
           message: '请阅读并勾选用户协议'
         });
           }
+        }else if(this.Password === ''){
+        this.$message.error('密码不能为空!!!');
         }else{
         this.$message.error('密码错误!!!');
         }
@@ -429,6 +432,16 @@ export default {
           localStorage.setItem('activeUser',JSON.stringify(user[0]))
         })
         console.log(user);
+    },
+    changeFocus(username){
+      if(username != ''){
+        this.$refs.password.focus()
+      }else{
+        this.$notify.info({
+          title: '注意',
+          message: '账号不能为空！！！'
+        });
+      }
     },
     },
     watch:{
